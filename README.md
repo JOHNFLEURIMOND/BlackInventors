@@ -1,5 +1,5 @@
-![Running Clock](img/bil.png)
-![Running Clock](img/bil2.png)
+![Running Clock](public/bil.png)
+![Running Clock](public/bil2.png)
 
 # My Awesome Project
 This Is An Application That Shows Famous Black Inventors History To Celebrate Black History Month
