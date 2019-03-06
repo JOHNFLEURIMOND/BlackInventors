@@ -12,12 +12,30 @@ This application is made with Pattern fleet library which made styling more easy
 
 ## Javascript~
 
+```
+ {Data.map((dataDetail, index) => {
+          return (
+            <a href='/' className='cd m-t500 g--4 g--4--sl'>
+              <div className='cd-ic' style={{ backgroundImage: "url()" }} />
+              <div className='cd-c'>
+                <div className='cd-t'>{dataDetail.first}</div>
+                <div className='cd-st t--upper t--subtitle'>
+                  {dataDetail.last}
+                </div>
+                <div className='cd-d'>{dataDetail.year}</div>
+                <div className='cd-d'>{dataDetail.passed}</div>
+              </div>
+            </a>
+          );
+        })}
+
+        ```
 
 ## Optimizations.
-
-
+I have a bunch of styling to do as you can see in the picture above, I would like three or four boxes across displaying the cards of the Inventors. As well have a pop-up modal showing a bio.
 
 ## Lessons Learned:
+I learned how to display JSON data on the screen.
 
 ## portfolio:
 
