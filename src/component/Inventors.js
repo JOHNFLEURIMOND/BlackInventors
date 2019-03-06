@@ -13,8 +13,12 @@ class Inventors extends Component {
   render() {
     return (
       <Container>
+
+<div className='b b-c p-a700'>
+
         {Data.map((dataDetail, index) => {
           return (
+            
             <a href='/' style={{display : 'inline-block'}} className='cd m-t500 g--4 g--4--sl'>
               <div className='cd-ic' style={{ backgroundImage: "url()" }} />
               <div className='cd-c'>
@@ -28,6 +32,7 @@ class Inventors extends Component {
             </a>
           );
         })}
+</div>
       </Container>
     );
   }
