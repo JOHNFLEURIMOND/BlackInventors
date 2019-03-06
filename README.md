@@ -1,19 +1,27 @@
-![Running Clock](public/bil.png)
-![Running Clock](public/bil2.png)
+# 🔢 Black Inventors Application
 
-# My Awesome Project
-This Is An Application That Shows Famous Black Inventors History To Celebrate Black History Month
 
+### What it should look like:
+![Black History](public/bil.png)
 
 ## How It's Made
-React and Bootstrap.
+React, Bootstrap, and Moment.js.
 
-## Lessons Learned:
-High Order Functions mostly right now, I am trying to figure out how I want the information to display on the virtual-dom after an onClick event happens.
+## CSS~
+This application is made with Pattern fleet library which made styling more easy, I used flex box to move the indivdual elements by itself. I had a code challenge last week for a job and saw what I lacked in, which was time effeciency. I was just taking to long to write the code. Dealing with the box model in css, after leaving the Resilient coders bootcamp, I got real aquianted with Bootstrap/Pattern Fleet library for City of Boston. They had their own styling guide so I didnt have to worry about the style just had to worry about the functionality of the comonents in React and what were the data types I was dealing with.
+
+## Javascript~
+
 
 ## Optimizations.
-Get the information to display instead of console.logging it
 
+
+
+## Lessons Learned:
+
+## portfolio:
+
+**WEBSITE:** ![**WEBSITE**](https:/johnfleurimond.com)
 
 ## Available Scripts
 
@@ -69,3 +77,4 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 
 ## Happy Coding!!!!
+
