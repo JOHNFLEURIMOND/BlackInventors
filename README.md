@@ -5,7 +5,7 @@
 ![Black History](public/bil.png)
 
 ## How It's Made
-React, Bootstrap, and Moment.js.
+This application is made with React, Bootstrap, and Moment.js. https://blackinventors.herokuapp.com/
 
 ## CSS~
 This application is made with Pattern fleet library which made styling more easy, I used flex box to move the indivdual elements by itself. I had a code challenge last week for a job and saw what I lacked in, which was time effeciency. I was just taking to long to write the code. Dealing with the box model in css, after leaving the Resilient coders bootcamp, I got real aquianted with Bootstrap/Pattern Fleet library for City of Boston. They had their own styling guide so I didnt have to worry about the style just had to worry about the functionality of the comonents in React and what were the data types I was dealing with.
@@ -38,7 +38,7 @@ I have a bunch of styling to do as you can see in the picture above, I would lik
 I learned how to display JSON data on the screen.
 
 ## portfolio:
-#### https:/johnfleurimond.com
+https:/johnfleurimond.com
 
 ## Available Scripts
 
