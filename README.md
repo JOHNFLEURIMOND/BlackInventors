@@ -28,8 +28,8 @@ This application is made with Pattern fleet library which made styling more easy
             </a>
           );
         })}
+```
 
-        ```
 
 ## Optimizations.
 I have a bunch of styling to do as you can see in the picture above, I would like three or four boxes across displaying the cards of the Inventors. As well have a pop-up modal showing a bio.
