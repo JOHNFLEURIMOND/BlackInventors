@@ -15,7 +15,7 @@ class Inventors extends Component {
       <Container>
         {Data.map((dataDetail, index) => {
           return (
-            <a href='/' className='cd m-t500 g--4 g--4--sl'>
+            <a href='/' style={{display : 'inline-block'}} className='cd m-t500 g--4 g--4--sl'>
               <div className='cd-ic' style={{ backgroundImage: "url()" }} />
               <div className='cd-c'>
                 <div className='cd-t'>{dataDetail.first}</div>
