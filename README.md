@@ -38,8 +38,7 @@ I have a bunch of styling to do as you can see in the picture above, I would lik
 I learned how to display JSON data on the screen.
 
 ## portfolio:
-
-**WEBSITE:** ![MY WEBSITE]("https:/johnfleurimond.com")
+[![My Website](public/footer-logo.png)](https:/johnfleurimond.com)
 
 ## Available Scripts
 
