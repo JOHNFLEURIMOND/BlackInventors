@@ -39,7 +39,7 @@ I learned how to display JSON data on the screen.
 
 ## portfolio:
 
-**WEBSITE:** ![**WEBSITE**](https:/johnfleurimond.com)
+**WEBSITE:** ![MY WEBSITE]("https:/johnfleurimond.com")
 
 ## Available Scripts
 
