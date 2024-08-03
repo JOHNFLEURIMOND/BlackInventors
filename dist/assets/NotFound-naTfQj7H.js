@@ -1,4 +1,4 @@
-import { j as o } from "./index-DcGnRrK3.js";
+import { j as o } from "./index-fBSlcwz0.js";
 import "./vendor-CXoAby46.js";
 const n = () =>
   o.jsx("div", {
