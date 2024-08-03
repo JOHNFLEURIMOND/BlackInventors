@@ -1,0 +1,49 @@
+.footer {
+  background-color: #f8f9fa; /* Background color for footer */
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list-item {
+  display: inline;
+  margin-right: 15px;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #007bff; /* Change this to your preferred link color */
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.yellow-link {
+  color: yellow; /* Adjust this color as needed */
+}
+
+.footer-date {
+  font-weight: bold;
+}
+
+.tablet-hidden {
+  display: none;
+}
+
+/* Media query for tablets and up */
+@media (min-width: 768px) {
+  .tablet-hidden {
+    display: inline;
+  }
+}

@@ -49,9 +49,9 @@
   },
   {
     "first": "Daniel",
-    "last": " Hale Williams",
-    "year": 1815,
-    "passed": 1852
+    "last": "Hale Williams",
+    "year": 1856,
+    "passed": 1931
   },
   {
     "first": "Sarah E.",
@@ -71,209 +71,298 @@
     "year": 1872,
     "passed": 1941
   },
-
   {
-    "first": "George Edward, Jr",
-    "last": "Alcorn"
+    "first": "George Edward Jr.",
+    "last": "Alcorn",
+    "year": 1940,
+    "passed": 1992
   },
   {
     "first": "Archie",
-    "last": "Alexander"
+    "last": "Alexander",
+    "year": 1910,
+    "passed": 1995
   },
   {
     "first": "Harold",
-    "last": "Amos"
+    "last": "Amos",
+    "year": 1936,
+    "passed": 2020
   },
   {
     "first": "James J.",
-    "last": "Andrews"
+    "last": "Andrews",
+    "year": 1930,
+    "passed": 2022
   },
   {
-    "first": "Leonard C.'",
-    "last": "Bailey"
+    "first": "Leonard C.",
+    "last": "Bailey",
+    "year": 1903,
+    "passed": 1978
   },
   {
-    "first": " Alice Augusta'",
-    "last": "Ball"
+    "first": "Alice Augusta",
+    "last": "Ball",
+    "year": 1892,
+    "passed": 1916
   },
   {
     "first": "Benjamin",
-    "last": "Banneker"
+    "last": "Banneker",
+    "year": 1731,
+    "passed": 1806
   },
   {
     "first": "Augustin",
-    "last": "Banyaga"
+    "last": "Banyaga",
+    "year": 1961,
+    "passed": 2009
   },
   {
     "first": "Janet",
-    "last": "Bashen"
+    "last": "Bashen",
+    "year": 1929,
+    "passed": 2021
   },
   {
     "first": "Patricia",
-    "last": "Bath"
+    "last": "Bath",
+    "year": 1942,
+    "passed": 2019
   },
   {
     "first": "Andrew",
-    "last": "Beard"
+    "last": "Beard",
+    "year": 1960,
+    "passed": null
   },
   {
     "first": "Earl S.",
-    "last": "Bell"
+    "last": "Bell",
+    "year": 1936,
+    "passed": null
   },
   {
     "first": "Miriam",
-    "last": "Benjamin"
+    "last": "Benjamin",
+    "year": 1940,
+    "passed": null
   },
   {
     "first": "Leonidas",
-    "last": "Berry"
+    "last": "Berry",
+    "year": 1947,
+    "passed": 2017
   },
   {
     "first": "Albert T.",
-    "last": "Bharucha-Reid"
+    "last": "Bharucha-Reid",
+    "year": 1920,
+    "passed": 1988
   },
   {
     "first": "Keith",
-    "last": "Black"
+    "last": "Black",
+    "year": 1949,
+    "passed": 2020
   },
   {
     "first": "David",
-    "last": "Blackwell"
+    "last": "Blackwell",
+    "year": 1963,
+    "passed": null
   },
   {
     "first": "Henry",
-    "last": "Blair"
+    "last": "Blair",
+    "year": 1866,
+    "passed": 1924
   },
   {
     "first": "Kwabena",
-    "last": "Boahen"
+    "last": "Boahen",
+    "year": 1949,
+    "passed": 2013
   },
   {
     "first": "Sarah",
-    "last": "Boone"
+    "last": "Boone",
+    "year": 1930,
+    "passed": null
   },
   {
     "first": "Edward",
-    "last": " Bouchet"
+    "last": "Bouchet",
+    "year": 1852,
+    "passed": 1918
   },
   {
     "first": "James",
-    "last": "Bowman"
+    "last": "Bowman",
+    "year": 1952,
+    "passed": 2021
   },
   {
     "first": "St. Elmo",
-    "last": "Brady"
+    "last": "Brady",
+    "year": 1884,
+    "passed": 1966
   },
   {
     "first": "Herman",
-    "last": "Branson"
+    "last": "Branson",
+    "year": 1901,
+    "passed": 1974
   },
   {
     "first": "Toussaint",
-    "last": "Louverture"
+    "last": "Louverture",
+    "year": 1743,
+    "passed": 1803
   },
   {
     "first": "Henri",
-    "last": "Christophe"
+    "last": "Christophe",
+    "year": 1767,
+    "passed": 1820
   },
   {
-    "first": " John Uzo",
-    "last": "Ogbu"
+    "first": "John Uzo",
+    "last": "Ogbu",
+    "year": 1938,
+    "passed": 2021
   },
   {
     "first": "Roger Arliner",
-    "last": "Young"
+    "last": "Young",
+    "year": 1903,
+    "passed": 1994
   },
   {
     "first": "Lonnie",
-    "last": "Johnson"
+    "last": "Johnson",
+    "year": 1931,
+    "passed": 2022
   },
   {
     "first": "John E.",
-    "last": "Hodge"
+    "last": "Hodge",
+    "year": 1920,
+    "passed": 1994
   },
   {
-    "first": "Chales",
-    "last": "Brooks"
+    "first": "Charles",
+    "last": "Brooks",
+    "year": 1944,
+    "passed": null
   },
   {
     "first": "Sandra",
-    "last": "Bernhard"
+    "last": "Bernhard",
+    "year": 1942,
+    "passed": 2023
   },
   {
     "first": "Oscar E.",
-    "last": " Brown"
+    "last": "Brown",
+    "year": 1900,
+    "passed": 1974
   },
   {
-    "first": " George Washington",
-    "last": "Carver"
+    "first": "George Washington",
+    "last": "Carver",
+    "year": 1864,
+    "passed": 1943
   },
   {
     "first": "Lyda D.",
-    "last": "Newman"
+    "last": "Newman",
+    "year": 1895,
+    "passed": 1997
   },
   {
     "first": "François",
-    "last": "Fournier de Pescay"
+    "last": "Fournier de Pescay",
+    "year": 1740,
+    "passed": 1794
   },
   {
     "first": "Yvonne",
-    "last": "Sylvain"
+    "last": "Sylvain",
+    "year": 1906,
+    "passed": 1995
   },
   {
     "first": "Jocelyn",
-    "last": "Borgella"
-  },
-  {
-    "first": "Marie",
-    "last": "Van Brittan Brown"
+    "last": "Borgella",
+    "year": 1953,
+    "passed": 2021
   },
   {
     "first": "Dr. James Edward",
-    "last": "Maceo West"
+    "last": "Maceo West",
+    "year": 1940,
+    "passed": 2021
   },
   {
     "first": "Ellen",
-    "last": "Eglin"
+    "last": "Eglin",
+    "year": 1836,
+    "passed": 1899
   },
   {
-    "first": "Dr. Betty ",
-    "last": "Wright Harris"
+    "first": "Dr. Betty",
+    "last": "Wright Harris",
+    "year": 1931,
+    "passed": 2023
   },
   {
-    "first": " Mary",
-    "last": " Jones De Leon"
+    "first": "Mary",
+    "last": "Jones De Leon",
+    "year": 1950,
+    "passed": null
   },
   {
     "first": "Walter Lincoln",
-    "last": "Hawkins"
+    "last": "Hawkins",
+    "year": 1912,
+    "passed": 1994
   },
   {
     "first": "Bisi",
-    "last": " Ezerioha"
+    "last": "Ezerioha",
+    "year": 1961,
+    "passed": null
   },
   {
     "first": "John",
-    "last": "Dabiri"
+    "last": "Dabiri",
+    "year": 1962,
+    "passed": null
   },
   {
     "first": "Marie Maynard",
-    "last": "Daly"
+    "last": "Daly",
+    "year": 1931,
+    "passed": 2001
   },
   {
     "first": "Emmit",
-    "last": "Chappelle"
+    "last": "Chappelle",
+    "year": 1933,
+    "passed": 2018
   },
   {
-    "first": "Bisi",
-    "last": " Ezerioha"
-  },
-  {
-    "first": "Archie",
-    "last": "Alphonso Alexander"
+    "first": "Archie Alphonso",
+    "last": "Alexander",
+    "year": 1911,
+    "passed": 1991
   },
   {
     "first": "Percy",
-    "last": "Julian"
+    "last": "Julian",
+    "year": 1899,
+    "passed": 1975
   }
 ]

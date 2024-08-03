@@ -1,0 +1,30 @@
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list-item {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #000; /* Change to your desired color */
+}
+
+.yellow-link {
+  color: yellow; /* Change this to match your desired color */
+}
+
+/* Responsive Design */
+.tablet-hidden {
+  display: none; /* Hide on small screens */
+}
+
+@media (min-width: 768px) {
+  .tablet-hidden {
+    display: inline; /* Show on tablet and larger screens */
+  }
+}
