@@ -1,5 +1,4 @@
-import React from "react";
-import "./NotFound.css";
+import './NotFound.css'
 
 const NotFound = () => (
   <div className="not-found-container">
@@ -10,6 +9,6 @@ const NotFound = () => (
       </p>
     </section>
   </div>
-);
+)
 
-export default NotFound;
+export default NotFound

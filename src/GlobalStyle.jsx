@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { colors, media } from "./theme"; // Named import
+import { createGlobalStyle } from 'styled-components'
+import { colors, media } from './theme' // Named import
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -190,6 +190,6 @@ const GlobalStyle = createGlobalStyle`
       grid-template-columns: 1fr;
     }
   }
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle

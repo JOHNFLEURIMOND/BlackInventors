@@ -1,17 +1,17 @@
-import React, { Suspense, lazy } from "react";
-import { Route, Routes } from "react-router-dom";
-import ErrorBoundary from "./component/ErrorBoundary.jsx";
+import { Suspense, lazy } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import ErrorBoundary from './component/ErrorBoundary.jsx'
 
 // Lazy loading components
-const Home = lazy(() => import("./containers/Home"));
-const NotFound = lazy(() => import("./containers/NotFound"));
-const InventorDetail = lazy(() => import("./pages/InventorDetail"));
+const Home = lazy(() => import('./containers/Home'))
+const NotFound = lazy(() => import('./containers/NotFound'))
+const InventorDetail = lazy(() => import('./pages/InventorDetail'))
 
 const LoadingFallback = () => (
-  <div style={{ padding: "2rem 1.6rem", maxWidth: "112rem", margin: "0 auto" }}>
+  <div style={{ padding: '2rem 1.6rem', maxWidth: '112rem', margin: '0 auto' }}>
     Loading archive view...
   </div>
-);
+)
 
 export default function RoutesComponent() {
   return (
@@ -24,5 +24,5 @@ export default function RoutesComponent() {
         </Routes>
       </Suspense>
     </ErrorBoundary>
-  );
+  )
 }

@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  validate:
+    name: Validate React App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Run security audit
+        # Known finding: GHSA-qwww-vcr4-c8h2 (react-router RSC-mode CSRF bypass).
+        # Accepted risk: this app is client-side Vite + React Router with no
+        # RSC/Remix server actions, so the vulnerable code path isn't reachable.
+        # Fixing requires a breaking react-router-dom downgrade/upgrade; do not
+        # force it. Revisit when a patched, non-breaking release is available.
+        # continue-on-error keeps this visible in CI logs without blocking merges.
+        run: npm run audit
+        continue-on-error: true

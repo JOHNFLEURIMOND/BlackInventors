@@ -1,205 +1,301 @@
-# :checkered_flag:Project Overview :checkered_flag::
+# Black Inventors Archive
 
-## How It's Made :nut_and_bolt:🔨 :hammer::wrench::
+> A modern interactive archive celebrating the innovators, engineers, scientists, and creators whose inventions shaped history.
 
-This application is built with the following technologies:
+🔗 **Live Demo:** https://johnfleurimond.com/
 
-- **Frontend:** React.js, styled-components, Formik
-- **Backend:** Express.js, Node.js
-- **Build Tool:** Vite
+## Overview
 
-## Optimizations
+The **Black Inventors Archive** is a modern React-powered experience designed to make the stories and contributions of Black inventors easier to discover, explore, and share.
 
-This is a basic template layout to kickstart fullstack applications. It is optimized for development and can be further customized for specific use cases.
+The application transforms historical records into an interactive archive featuring inventor profiles, searchable collections, and a clean user experience built with modern frontend technologies.
 
-### Verify Node.js and npm Versions
+The goal is simple:
 
-To check your current Node.js and npm versions:
+**Preserve history. Improve discoverability. Inspire future innovators.**
+
+---
+
+# Features
+
+## 🔎 Discover Inventors
+
+Explore a curated collection of Black inventors and innovators across different eras and industries.
+
+Users can:
+
+- Browse inventor profiles
+- Search inventors by name
+- Filter by historical era
+- Explore individual inventor detail pages
+
+---
+
+## 📚 Detailed Inventor Profiles
+
+Each profile provides a focused view into an inventor's:
+
+- Background
+- Contributions
+- Innovations
+- Historical impact
+
+The profile experience is designed to make complex historical information approachable and engaging.
+
+---
+
+## ⚡ Fast Modern Experience
+
+Built with a modern frontend stack focused on:
+
+- Fast page loads
+- Responsive layouts
+- Component-driven architecture
+- Maintainable code organization
+
+---
+
+## 📊 Lightweight Analytics Layer
+
+The application includes a custom analytics foundation to track meaningful user interactions.
+
+Tracked events include:
+
+- Page views
+- Search interactions
+- Filters
+- Inventor selections
+
+The analytics architecture is designed with privacy and maintainability in mind.
+
+---
+
+## 🔍 Search & Discovery Experience
+
+The archive includes:
+
+- Real-time search
+- Historical filtering
+- Dynamic inventor loading
+- User-friendly navigation
+
+Designed to help users quickly find stories that interest them.
+
+---
+
+# Tech Stack
+
+## Frontend
+
+- React 18
+- React Router
+- styled-components
+- Vite 8
+- JavaScript (ES6+)
+
+## Testing
+
+- Vitest
+- React Testing Library
+
+## Code Quality
+
+- ESLint
+- Prettier
+- Husky
+- lint-staged
+
+## Tooling
+
+- Node.js 22
+- npm
+- GitHub Actions CI
+
+---
+
+# Screenshots
+
+_Add screenshots or GIF demonstrations here._
+
+Recommended examples:
+
+- Archive homepage
+- Search experience
+- Inventor detail page
+- Mobile responsive view
+
+---
+
+# Installation
+
+Clone the repository:
 
 ```bash
-node -v && npm -v
-# Example output:
-# v20.15.0
-# 10.7.0
+git clone https://github.com/JOHNFLEURIMOND/BlackInventors.git
+
+cd BlackInventors
 ```
 
-### Install and Use the Correct Node.js Version
-
-To install and use the correct Node.js version:
+Install dependencies:
 
 ```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-nvm install 20
-```
-
-## My Awesome Project & Lessons Learned :mortar_board::
-
-For more details on the project and the lessons learned, please refer to [My Portfolio](http://johnfleurimond.com).
-
-## Getting Started :arrow_forward::
-
-### Kill Node Processes
-
-To stop any running Node.js processes:
-
-```bash
-sudo kill -9 $(ps aux | grep node | grep -v grep | awk '{print $2}')
-```
-
-### Installation
-
-1. **Clone the Repository:**
-
-   ```bash
-   git clone {{repository-url}}
-   cd {{repository-directory}}
-   ```
-
-2. **Install Dependencies:**
-   ```bash
-   npm install
-   ```
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run serve`
-
-**Example Output:**
-
-```
-VITE v5.3.5  ready in 107 ms
-
-  ➜  Local:   http://localhost:5177/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
-```
-
-Runs the app in development mode. Open [http://localhost:5177](http://localhost:5177) to view it in your browser. The page will reload if you make edits, and lint errors will be displayed in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder. This bundles React in production mode and optimizes the build for the best performance. The build is minified, and the filenames include hashes. Your app is ready to be deployed.
-
-See the [Deployment](#deployment) section for more information.
-
-### `npm run prettier`
-
-Formats the code according to Prettier configuration.
-
-## :keyboard::computer_mouse::desktop_computer::computer:: GitHub :computer::desktop_computer::keyboard::
-
-### :broom::soap: Clean Up Code Before Pushing :soap::broom:
-
-Before pushing changes to the repository, clean up the code and update dependencies:
-
-```bash
-npm run prettier
-rm -rf package-lock.json
-rm -rf node_modules
-git add .
-git commit -m "Update README"
-git push
-```
-
-or
-
-```bash
-npm run prettier && rm -rf package-lock.json && rm -rf node_modules && git add . && git commit -m "Update README" && git push
-```
-
-To update dependencies and handle known issues:
-
-```bash
-rm -rf package-lock.json
-rm -rf node_modules
-npm install -g npm-check-updates
-ncu -u
 npm install
-npm ls ajv
-npm install --save-dev ajv@^8
 ```
 
-or
+---
+
+# Development
+
+Start the local development server:
 
 ```bash
-rm -rf package-lock.json && rm -rf node_modules && npm install -g npm-check-updates && ncu -u && npm install && npm ls ajv && npm install --save-dev ajv@^8
+npm run dev
 ```
 
-### :heavy_plus_sign::heavy_plus_sign: Merging Code :heavy_plus_sign::heavy_plus_sign:
+The application will be available locally through the Vite development server.
 
-1. **Check Your Current Branch:**
-   List all branches and check your current branch:
+---
 
-   ```bash
-   git branch -a
-   ```
+# Production Build
 
-   If you need to create a new branch:
+Create an optimized production build:
 
-   ```bash
-   git checkout -b {{name-of-your-branch}}
-   ```
-
-2. **Add and Commit Your Changes:**
-   Add and commit your work:
-
-   ```bash
-   git add .
-   git commit -m "{{explain your changes}}"
-   git push
-   ```
-
-3. **Fetch and Pull Updates:**
-   Fetch and pull all changes from remote branches:
-
-   ```bash
-   git fetch --all
-   git pull --all
-   ```
-
-4. **Merge or Rebase:**
-   Merge changes from the main branch to your branch:
-
-   ```bash
-   git merge main
-   ```
-
-   Alternatively, you can rebase:
-
-   ```bash
-   git rebase main
-   ```
-
-   **Important:** Resolve any conflicts that arise, accept the incoming changes as needed, and commit the resolved changes:
-
-   ```bash
-   git add .
-   git commit -m "Merged main branch into current branch"
-   git push
-   ```
-
-   or
-
-   ```bash
-   git add . && git commit -m "Merged main branch into current branch" && git push
-   ```
-
-## License
-
-Fleurimond 2024
-
-## Contributing
-
-## How It Works:white_check_mark::
-
-.....
-
-## Contact
-
-For any questions or feedback, please reach out to [Fleur](http://johnfleurimond.com).
-
+```bash
+npm run build
 ```
 
+---
+
+# Quality Checks
+
+Before committing changes, run:
+
+```bash
+npm run lint
+npm run test
+npm run build
+npm run audit
 ```
+
+These checks validate:
+
+- Code quality
+- Application behavior
+- Production builds
+- Dependency security
+
+---
+
+# Architecture
+
+The project follows a component-based React architecture:
+
+```text
+src/
+├── component/       # Reusable UI components
+├── containers/      # Page-level layouts
+├── hooks/           # Reusable React hooks
+├── lib/             # Application utilities and services
+├── pages/           # Route-based pages
+├── data/            # Archive data sources
+└── styles/          # Global styling
+```
+
+---
+
+# Data Flow
+
+The application follows a simple data pipeline:
+
+```
+Archive Data
+      |
+      ↓
+Data Loader
+      |
+      ↓
+React Components
+      |
+      ↓
+User Interaction
+      |
+      ↓
+Analytics Events
+```
+
+This keeps data processing, presentation, and tracking separated.
+
+---
+
+# Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Add required environment values before running the application.
+
+Never commit `.env` files containing private credentials.
+
+---
+
+# SEO
+
+The application includes static SEO resources:
+
+```
+/robots.txt
+/sitemap.xml
+```
+
+These improve:
+
+- Search engine discoverability
+- Site indexing
+- Public accessibility
+
+---
+
+# Testing Strategy
+
+The project includes automated coverage for:
+
+- Data loading behavior
+- Component rendering
+- User interactions
+- Navigation flows
+
+Example:
+
+```bash
+npm run test
+```
+
+---
+
+# Future Improvements
+
+Potential enhancements:
+
+- Additional inventor collections
+- Timeline exploration
+- Industry/category filtering
+- More detailed historical sources
+- Accessibility improvements
+- Progressive Web App support
+
+---
+
+# Why This Project Exists
+
+History is often shaped by innovation, but many innovators do not receive equal visibility.
+
+The Black Inventors Archive is an effort to create a modern, accessible way to learn about the people behind important ideas and technologies.
+
+---
+
+# License
+
+© Fleurimond 2026

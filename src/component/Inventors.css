@@ -32,11 +32,63 @@
   opacity: 1;
 }
 
+.era-strip {
+  margin-top: 1.15rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.era-pill {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 999px;
+  padding: 0.42rem 0.78rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.era-pill:hover {
+  transform: translateY(-1px);
+  border-color: #94a3b8;
+}
+
+.era-pill--active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #f8fafc;
+}
+
+.era-count {
+  font-size: 0.72rem;
+  padding: 0.16rem 0.42rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.1);
+}
+
+.era-pill--active .era-count {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .inventors-controls {
   margin-top: 1.5rem;
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.inventors-controls--rail {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
 .control-field {
@@ -57,6 +109,65 @@
   background: #ffffff;
 }
 
+.control-field input:focus,
+.control-field select:focus {
+  outline: 3px solid rgba(15, 23, 42, 0.14);
+  outline-offset: 1px;
+}
+
+.filters-row {
+  margin-top: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.active-filters {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  border: 1px solid #0f172a;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.28rem 0.64rem;
+}
+
+.filter-chip::before {
+  content: '×';
+  margin-right: 0.4rem;
+}
+
+.filter-chip--ghost {
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+
+.filter-chip--ghost::before {
+  content: '';
+  margin-right: 0;
+}
+
+.reset-filters {
+  border: none;
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 0.65rem;
+  padding: 0.42rem 0.8rem;
+  font-weight: 700;
+}
+
+.reset-filters:hover {
+  background: #1e293b;
+}
+
 .inventors-status {
   margin-top: 1rem;
   color: #374151;
@@ -71,6 +182,18 @@
   gap: 1.5rem;
 }
 
+.card-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: cardReveal 560ms ease forwards;
+}
+
+@keyframes cardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .card {
   display: flex;
@@ -81,7 +204,9 @@
   overflow: hidden;
   background-color: #fff;
   box-shadow: 0 16px 35px rgba(17, 24, 39, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   outline: none;
 }
 
@@ -125,13 +250,25 @@
   padding: 1.25rem 1.25rem 1.5rem;
 }
 
+.card-era {
+  display: inline-flex;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  color: #334155;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
 .card-year {
   font-size: 0.9rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #5f4630;
+  color: #0f172a;
   opacity: 1;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-name {
@@ -141,15 +278,42 @@
   color: #111827;
 }
 
+.card-known-for {
+  margin: 0 0 0.55rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
 .card-passed {
   margin: 0;
   color: #4b5563;
   opacity: 1;
 }
 
+.empty-state {
+  border: 1px dashed #94a3b8;
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+}
+
+.empty-state h3 {
+  color: #0f172a;
+  margin-bottom: 0.35rem;
+}
+
+.empty-state p {
+  color: #475569;
+  margin-bottom: 0.9rem;
+}
+
 @media (max-width: 768px) {
   .inventors-container {
     padding: 2.4rem 1rem 3rem;
+  }
+
+  .inventors-controls {
+    grid-template-columns: 1fr;
   }
 
   .card-container {
