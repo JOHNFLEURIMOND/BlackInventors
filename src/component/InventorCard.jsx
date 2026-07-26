@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 /**
  * InventorCard
@@ -10,32 +9,25 @@ import { Link } from "react-router-dom";
  */
 const InventorCard = ({ inventor, index, onSelect }) => {
   const fullName =
-    inventor.displayName ||
-    `${inventor.firstName || ""} ${inventor.lastName || ""}`.trim();
+    inventor.displayName || `${inventor.firstName || ''} ${inventor.lastName || ''}`.trim();
   const image = inventor.images?.[0] || null;
   const era = inventor.birthYear
     ? inventor.birthYear < 1800
-      ? "1700s"
+      ? '1700s'
       : inventor.birthYear < 1900
-        ? "1800s"
+        ? '1800s'
         : inventor.birthYear < 2000
-          ? "1900s"
-          : "2000+"
-    : "Unknown era";
+          ? '1900s'
+          : '2000+'
+    : 'Unknown era';
   const knownFor =
     inventor.summary || inventor.categories?.[0]
-      ? `Known for ${inventor.categories?.[0] || "innovation"}.`
-      : "Known for pioneering contributions.";
-  const deathLabel = inventor.deathYear
-    ? `d. ${inventor.deathYear}`
-    : "Living legacy";
+      ? `Known for ${inventor.categories?.[0] || 'innovation'}.`
+      : 'Known for pioneering contributions.';
+  const deathLabel = inventor.deathYear ? `d. ${inventor.deathYear}` : 'Living legacy';
 
   return (
-    <article
-      className="card"
-      role="group"
-      aria-labelledby={`card-title-${index}`}
-    >
+    <article className="card" role="group" aria-labelledby={`card-title-${index}`}>
       <Link
         className="card-link"
         to={`/inventor/${inventor.slug}`}
@@ -53,7 +45,7 @@ const InventorCard = ({ inventor, index, onSelect }) => {
               width="600"
               height="400"
               onError={(event) => {
-                event.currentTarget.style.display = "none";
+                event.currentTarget.style.display = 'none';
               }}
             />
           ) : (
@@ -63,7 +55,7 @@ const InventorCard = ({ inventor, index, onSelect }) => {
 
         <div className="card-content">
           <p className="card-era">{era}</p>
-          <p className="card-year">{inventor.birthYear || "Unknown year"}</p>
+          <p className="card-year">{inventor.birthYear || 'Unknown year'}</p>
           <h3 id={`card-title-${index}`} className="card-name">
             {fullName}
           </h3>

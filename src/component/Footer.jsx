@@ -1,13 +1,12 @@
-import React from "react";
-import "./Footer.css";
+import './Footer.css';
 
-const footerDate = new Intl.DateTimeFormat("en-US", {
-  weekday: "short",
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "2-digit",
+const footerDate = new Intl.DateTimeFormat('en-US', {
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: '2-digit',
 }).format(new Date());
 
 const Footer = () => {
@@ -16,9 +15,7 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-brand">
           <span className="footer-brand__name">Black Inventors</span>
-          <span className="footer-brand__meta">
-            Curated stories of innovation
-          </span>
+          <span className="footer-brand__meta">Curated stories of innovation</span>
         </div>
         <ul className="footer-list">
           <li className="footer-list-item">

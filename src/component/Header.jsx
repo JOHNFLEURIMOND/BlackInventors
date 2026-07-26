@@ -1,14 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./Header.css";
+import { Link } from 'react-router-dom';
+import './Header.css';
 
-const headerDate = new Intl.DateTimeFormat("en-US", {
-  weekday: "short",
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "2-digit",
+const headerDate = new Intl.DateTimeFormat('en-US', {
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: '2-digit',
 }).format(new Date());
 
 const Header = () => {

@@ -2,7 +2,10 @@ const raw = require('../src/data/seats.json');
 const crypto = require('crypto');
 
 function normalizeUnicode(s) {
-  return String(s || '').trim().normalize('NFKD').replace(/\p{Diacritic}/gu, '');
+  return String(s || '')
+    .trim()
+    .normalize('NFKD')
+    .replace(/\p{Diacritic}/gu, '');
 }
 
 function stripHonorifics(name) {
@@ -45,7 +48,7 @@ raw.forEach((r, idx) => {
   groups[base].push({ raw: r, index: idx });
 });
 
-const collisions = Object.entries(groups).filter(([k, v]) => v.length > 1);
+const collisions = Object.entries(groups).filter(([, v]) => v.length > 1);
 
 const report = {
   totalRecords: raw.length,
@@ -115,16 +118,36 @@ for (const [base, items] of collisions) {
       }
     }
 
-    return { displayName: rec.displayName, birthYear: rec.birthYear, deathYear: rec.deathYear, index: rec.index, proposedSlug: proposed, reason };
+    return {
+      displayName: rec.displayName,
+      birthYear: rec.birthYear,
+      deathYear: rec.deathYear,
+      index: rec.index,
+      proposedSlug: proposed,
+      reason,
+    };
   });
 
   // classify collisions: duplicates if displayName + birthYear + deathYear identical
   const classifications = recs.map((rec) => {
-    const dupes = recs.filter((r) => r.displayName === rec.displayName && r.birthYear === rec.birthYear && r.deathYear === rec.deathYear);
+    const dupes = recs.filter(
+      (r) =>
+        r.displayName === rec.displayName &&
+        r.birthYear === rec.birthYear &&
+        r.deathYear === rec.deathYear
+    );
     if (dupes.length > 1) return { index: rec.index, classification: 'duplicate record' };
     // same name different person if birthYear differs
-    const sameNameOthers = recs.filter((r) => r.displayName === rec.displayName && !(r.birthYear === rec.birthYear && r.deathYear === rec.deathYear));
-    if (sameNameOthers.length > 0) return { index: rec.index, classification: 'same name, different person' };
+    const sameNameOthers = recs.filter(
+      (r) =>
+        r.displayName === rec.displayName &&
+        !(r.birthYear === rec.birthYear && r.deathYear === rec.deathYear)
+    );
+    if (sameNameOthers.length > 0)
+      return {
+        index: rec.index,
+        classification: 'same name, different person',
+      };
     return { index: rec.index, classification: 'requires editorial review' };
   });
 
@@ -134,7 +157,13 @@ for (const [base, items] of collisions) {
     if (c.classification === 'requires editorial review') report.requiresReview.push(c.index);
   });
 
-  report.collisionGroups.push({ baseSlug: base, count: items.length, records: recs, recommendations, classifications });
+  report.collisionGroups.push({
+    baseSlug: base,
+    count: items.length,
+    records: recs,
+    recommendations,
+    classifications,
+  });
 }
 
 // dedupe lists

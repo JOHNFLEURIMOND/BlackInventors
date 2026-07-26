@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import dataLoader from "../lib/dataLoader";
+import { useMemo } from 'react';
+import { getAllInventors, getInventorById, getInventorBySlug } from '../lib/dataLoader';
 
 // useInventors exposes a stable API for local synchronous data today while
 // preserving lookup helpers for future async backends.
@@ -7,7 +7,7 @@ import dataLoader from "../lib/dataLoader";
 export default function useInventors() {
   const inventors = useMemo(() => {
     try {
-      return dataLoader.getAllInventors();
+      return getAllInventors();
     } catch {
       return [];
     }
@@ -15,8 +15,8 @@ export default function useInventors() {
 
   const loading = false;
   const error = null;
-  const getBySlug = (slug) => dataLoader.getInventorBySlug(slug);
-  const getById = (id) => dataLoader.getInventorById(id);
+  const getBySlug = (slug) => getInventorBySlug(slug);
+  const getById = (id) => getInventorById(id);
 
   return {
     inventors,

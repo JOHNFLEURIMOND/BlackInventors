@@ -1,13 +1,12 @@
-import React from "react";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import Routes from "./Routes";
-import Header from "./component/Header";
-import Footer from "./component/Footer";
-import { ThemeProvider } from "styled-components";
-import { colors, media } from "./theme";
-import GlobalStyle from "./GlobalStyle.jsx";
-import { trackPageView } from "./lib/analytics";
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import Routes from './Routes';
+import Header from './component/Header';
+import Footer from './component/Footer';
+import { ThemeProvider } from 'styled-components';
+import { colors, media } from './theme';
+import GlobalStyle from './GlobalStyle.jsx';
+import { trackPageView } from './lib/analytics';
 
 const theme = {
   colors,

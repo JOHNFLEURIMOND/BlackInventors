@@ -4,7 +4,7 @@
 // - Normalizes records in memory and generates stable `id` and `slug` values.
 // - Exposes simple lookup helpers for list and single-record access.
 
-import raw from "../data/seats.json";
+import raw from '../data/seats.json';
 
 // dataLoader: improved normalization, canonical slug/id strategy, collision
 // resolution, and duplicate detection. All transformations are in-memory and
@@ -12,24 +12,22 @@ import raw from "../data/seats.json";
 
 // ----- utilities -----
 function normalizeUnicode(s) {
-  return String(s || "")
+  return String(s || '')
     .trim()
-    .normalize("NFKD")
-    .replace(/\p{Diacritic}/gu, "");
+    .normalize('NFKD')
+    .replace(/\p{Diacritic}/gu, '');
 }
 
 function stripHonorifics(name) {
-  if (!name) return "";
-  return name
-    .replace(/^\s*(dr\.|mr\.|mrs\.|ms\.|miss\.|sir\s+|dame\s+|rev\.)\s*/i, "")
-    .trim();
+  if (!name) return '';
+  return name.replace(/^\s*(dr\.|mr\.|mrs\.|ms\.|miss\.|sir\s+|dame\s+|rev\.)\s*/i, '').trim();
 }
 
 function slugify(input) {
-  return normalizeUnicode(String(input || ""))
+  return normalizeUnicode(String(input || ''))
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
     .slice(0, 60);
 }
 
@@ -44,27 +42,27 @@ function shortHash(str) {
 }
 
 function displayNameOf(rec) {
-  const first = rec.first || "";
-  const last = rec.last || "";
+  const first = rec.first || '';
+  const last = rec.last || '';
   return `${first} ${last}`.trim();
 }
 
 // ----- build base/expanded slugs and grouping -----
 const items = raw.map((r, i) => {
-  const firstClean = stripHonorifics(r.first || "");
-  const last = r.last || "";
+  const firstClean = stripHonorifics(r.first || '');
+  const last = r.last || '';
   const displayName = displayNameOf(r);
   const birthYear = r.year || null;
   const deathYear = r.passed === undefined ? null : r.passed;
 
   const baseSlug = slugify(`${firstClean} ${last}`);
   // expanded slug uses full first token (with middle names) if present
-  const expandedSlug = slugify(`${r.first || ""} ${last}`);
+  const expandedSlug = slugify(`${r.first || ''} ${last}`);
 
   return {
     _raw: r,
     displayName,
-    firstName: r.first || "",
+    firstName: r.first || '',
     lastName: last,
     birthYear,
     deathYear,
@@ -76,7 +74,7 @@ const items = raw.map((r, i) => {
 
 // group by baseSlug
 const groups = items.reduce((acc, it) => {
-  const key = it.baseSlug || "unknown";
+  const key = it.baseSlug || 'unknown';
   if (!acc[key]) acc[key] = [];
   acc[key].push(it);
   return acc;
@@ -86,7 +84,7 @@ const groups = items.reduce((acc, it) => {
 function rawKey(r) {
   try {
     return JSON.stringify(r);
-  } catch (e) {
+  } catch {
     return String(r);
   }
 }
@@ -166,7 +164,7 @@ Object.entries(groups).forEach(([base, group]) => {
           timeline: [],
           relatedIds: [],
           sources: [],
-          collisionReason: "duplicate-record",
+          collisionReason: 'duplicate-record',
           duplicate: true,
           duplicateOfIndex: canonical.index,
         };
@@ -197,7 +195,7 @@ Object.entries(groups).forEach(([base, group]) => {
       timeline: [],
       relatedIds: [],
       sources: [],
-      collisionReason: "resolved-by-duplicate-collapse",
+      collisionReason: 'resolved-by-duplicate-collapse',
       duplicate: false,
     };
     collisionReport.sampleSlugs.push(slug);
@@ -232,7 +230,7 @@ Object.entries(groups).forEach(([base, group]) => {
         timeline: [],
         relatedIds: [],
         sources: [],
-        collisionReason: "expanded-name-used",
+        collisionReason: 'expanded-name-used',
         duplicate: false,
       };
       collisionReport.sampleSlugs.push(slug);
@@ -242,14 +240,12 @@ Object.entries(groups).forEach(([base, group]) => {
 
   // 2) try birthYear uniqueness
   const birthCounts = representatives.reduce((acc, r) => {
-    const by = r.birthYear || "null";
+    const by = r.birthYear || 'null';
     acc[by] = (acc[by] || 0) + 1;
     return acc;
   }, {});
 
-  const canUseBirth = representatives.every(
-    (r) => r.birthYear && birthCounts[r.birthYear] === 1,
-  );
+  const canUseBirth = representatives.every((r) => r.birthYear && birthCounts[r.birthYear] === 1);
   if (canUseBirth) {
     representatives.forEach((r) => {
       const slug = `${r.baseSlug}-${r.birthYear}`;
@@ -270,7 +266,7 @@ Object.entries(groups).forEach(([base, group]) => {
         timeline: [],
         relatedIds: [],
         sources: [],
-        collisionReason: "birthYear-appended",
+        collisionReason: 'birthYear-appended',
         duplicate: false,
       };
       collisionReport.sampleSlugs.push(slug);
@@ -281,10 +277,8 @@ Object.entries(groups).forEach(([base, group]) => {
   // 3) fallback to deterministic hash
   representatives.forEach((r) => {
     const basePart = r.baseSlug || slugify(r.displayName);
-    const birthPart = r.birthYear || "na";
-    const h = shortHash(
-      `${r.displayName}|${r.birthYear}|${JSON.stringify(r._raw)}`,
-    );
+    const birthPart = r.birthYear || 'na';
+    const h = shortHash(`${r.displayName}|${r.birthYear}|${JSON.stringify(r._raw)}`);
     const slug = `${basePart}-${birthPart}-${h}`;
     normalized[r.index] = {
       id: slug,
@@ -303,7 +297,7 @@ Object.entries(groups).forEach(([base, group]) => {
       timeline: [],
       relatedIds: [],
       sources: [],
-      collisionReason: "hash-fallback",
+      collisionReason: 'hash-fallback',
       duplicate: false,
     };
     collisionReport.sampleSlugs.push(slug);
@@ -314,9 +308,7 @@ Object.entries(groups).forEach(([base, group]) => {
 Object.keys(groups).forEach((base) => {
   const group = groups[base];
   // find representative slug for this group (first non-duplicate with normalized entry)
-  const rep = group.find(
-    (g) => normalized[g.index] && !normalized[g.index].duplicate,
-  );
+  const rep = group.find((g) => normalized[g.index] && !normalized[g.index].duplicate);
   if (!rep) return;
   const canonicalSlug = normalized[rep.index].slug;
   // assign duplicateOf for entries previously marked duplicate
@@ -337,8 +329,8 @@ for (let i = 0; i < raw.length; i++) {
       id: slug,
       slug,
       displayName: displayNameOf(r),
-      firstName: r.first || "",
-      lastName: r.last || "",
+      firstName: r.first || '',
+      lastName: r.last || '',
       birthYear: r.year || null,
       deathYear: r.passed === undefined ? null : r.passed,
       summary: null,
@@ -357,26 +349,19 @@ for (let i = 0; i < raw.length; i++) {
 }
 
 // Development validation output
-if (process.env.NODE_ENV !== "production") {
-  console.log("dataLoader: processed", collisionReport.total, "records");
-  console.log("dataLoader: collisions found", collisionReport.collisions);
-  console.log("dataLoader: duplicates found", collisionReport.duplicates);
-  console.log(
-    "dataLoader: sample slugs",
-    collisionReport.sampleSlugs.slice(0, 10),
-  );
+if (process.env.NODE_ENV !== 'production') {
+  console.log('dataLoader: processed', collisionReport.total, 'records');
+  console.log('dataLoader: collisions found', collisionReport.collisions);
+  console.log('dataLoader: duplicates found', collisionReport.duplicates);
+  console.log('dataLoader: sample slugs', collisionReport.sampleSlugs.slice(0, 10));
 }
 
 const canonicalInventors = normalized.filter(
-  (record) => record && !record.duplicate && record.id && record.slug,
+  (record) => record && !record.duplicate && record.id && record.slug
 );
 
-const byId = Object.fromEntries(
-  canonicalInventors.map((record) => [record.id, record]),
-);
-const bySlug = Object.fromEntries(
-  canonicalInventors.map((record) => [record.slug, record]),
-);
+const byId = Object.fromEntries(canonicalInventors.map((record) => [record.id, record]));
+const bySlug = Object.fromEntries(canonicalInventors.map((record) => [record.slug, record]));
 
 export function getAllInventors() {
   return canonicalInventors.slice();

@@ -1,8 +1,8 @@
-import React, { lazy, Suspense } from "react";
-import { Link } from "react-router-dom";
-import "./Home.css";
+import { lazy, Suspense } from 'react';
+import { Link } from 'react-router-dom';
+import './Home.css';
 
-const Inventors = lazy(() => import("../component/Inventors"));
+const Inventors = lazy(() => import('../component/Inventors'));
 
 const Home = () => {
   return (
@@ -16,12 +16,12 @@ const Home = () => {
                 Black Inventors
               </h1>
               <p className="hero-description">
-                Discover a curated collection of Black innovators whose work
-                shaped modern life across science, technology, and design.
+                Discover a curated collection of Black innovators whose work shaped modern life
+                across science, technology, and design.
               </p>
               <p className="hero-details">
-                This experience highlights the breadth of invention, creativity,
-                and perseverance behind a remarkable legacy.
+                This experience highlights the breadth of invention, creativity, and perseverance
+                behind a remarkable legacy.
               </p>
               <p className="hero-action">
                 <a
@@ -41,8 +41,8 @@ const Home = () => {
               </h2>
               <p className="spotlight-dates">1848 - 1928</p>
               <p className="spotlight-copy">
-                From carbon filament improvements to blueprint systems, Latimer
-                helped make electric light practical for everyday life.
+                From carbon filament improvements to blueprint systems, Latimer helped make electric
+                light practical for everyday life.
               </p>
               <Link className="spotlight-link" to="/inventor/lewis-latimer">
                 View story
@@ -53,10 +53,7 @@ const Home = () => {
       </div>
       <Suspense
         fallback={
-          <section
-            className="inventors-container"
-            aria-labelledby="inventors-heading"
-          >
+          <section className="inventors-container" aria-labelledby="inventors-heading">
             <div className="inventors-intro">
               <h2 id="inventors-heading" className="inventors-title">
                 Loading the archive...

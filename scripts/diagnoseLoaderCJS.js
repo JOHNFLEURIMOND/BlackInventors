@@ -1,7 +1,10 @@
 const raw = require('../src/data/seats.json');
 
 function normalizeUnicode(s) {
-  return String(s || '').trim().normalize('NFKD').replace(/\p{Diacritic}/gu, '');
+  return String(s || '')
+    .trim()
+    .normalize('NFKD')
+    .replace(/\p{Diacritic}/gu, '');
 }
 
 function stripHonorifics(name) {
@@ -64,7 +67,7 @@ const groups = items.reduce((acc, it) => {
 function rawKey(r) {
   try {
     return JSON.stringify(r);
-  } catch (e) {
+  } catch {
     return String(r);
   }
 }
@@ -311,4 +314,4 @@ console.log('diagnostics: total=', collisionReport.total);
 console.log('diagnostics: collisions=', collisionReport.collisions);
 console.log('diagnostics: duplicates=', collisionReport.duplicates);
 console.log('diagnostics: sample slugs=', collisionReport.sampleSlugs.slice(0, 12));
-console.log(JSON.stringify(normalized.slice(0,5), null, 2));
+console.log(JSON.stringify(normalized.slice(0, 5), null, 2));

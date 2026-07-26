@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { colors, media } from "./theme"; // Named import
+import { createGlobalStyle } from 'styled-components';
+import { colors, media } from './theme'; // Named import
 
 const GlobalStyle = createGlobalStyle`
   :root {
