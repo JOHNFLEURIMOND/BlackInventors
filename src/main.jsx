@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
 
 // Ensure you have a root element with the ID 'root' in your index.html file
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById('root')
 
 if (!rootElement) {
-  throw new Error("Root element with id 'root' not found.");
+  throw new Error("Root element with id 'root' not found.")
 }
 
-const root = ReactDOM.createRoot(rootElement);
+const root = ReactDOM.createRoot(rootElement)
 
 root.render(
   <React.StrictMode>
@@ -23,4 +23,4 @@ root.render(
       <App />
     </BrowserRouter>
   </React.StrictMode>
-);
+)

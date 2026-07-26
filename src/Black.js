@@ -60,27 +60,34 @@ const inventors = [
   { first: 'Emmit', last: 'Chappelle', year: 1933, passed: 2018 },
   { first: 'Archie Alphonso', last: 'Alexander', year: 1911, passed: 1991 },
   { first: 'Percy', last: 'Julian', year: 1899, passed: 1975 },
-];
+]
 
 // 1. Filter the list of inventors for those born in the 1800s
-const inventors1800s = inventors.filter(({ year }) => year >= 1800 && year < 1900);
-console.table(inventors1800s);
+const inventors1800s = inventors.filter(
+  ({ year }) => year >= 1800 && year < 1900
+)
+console.table(inventors1800s)
 
 // 2. Create an array of the inventors' full names
-const fullNames = inventors.map(({ first, last }) => `${first} ${last}`);
-console.log(fullNames);
+const fullNames = inventors.map(({ first, last }) => `${first} ${last}`)
+console.log(fullNames)
 
 // 3. Sort the inventors by birthdate, oldest to youngest
-const sortedByBirthdate = [...inventors].sort((a, b) => a.year - b.year);
-console.table(sortedByBirthdate);
+const sortedByBirthdate = [...inventors].sort((a, b) => a.year - b.year)
+console.table(sortedByBirthdate)
 
 // 4. Calculate the total years all the inventors lived
-const totalYearsLived = inventors.reduce((total, { year, passed }) => total + (passed - year), 0);
-console.log(totalYearsLived);
+const totalYearsLived = inventors.reduce(
+  (total, { year, passed }) => total + (passed - year),
+  0
+)
+console.log(totalYearsLived)
 
 // 5. Sort the inventors by years lived
-const sortedByYearsLived = [...inventors].sort((a, b) => b.passed - b.year - (a.passed - a.year));
-console.table(sortedByYearsLived);
+const sortedByYearsLived = [...inventors].sort(
+  (a, b) => b.passed - b.year - (a.passed - a.year)
+)
+console.table(sortedByYearsLived)
 
 // 6. Sort the people alphabetically by last name
 const people = [
@@ -125,11 +132,11 @@ const people = [
   'Johnson, Lonnie',
   'Ogbu, John Uzo',
   'Young, Roger Arliner',
-];
+]
 
 const sortedPeopleByLastName = [...people].sort((a, b) => {
-  const [aLast] = a.split(', ');
-  const [bLast] = b.split(', ');
-  return aLast.localeCompare(bLast);
-});
-console.table(sortedPeopleByLastName);
+  const [aLast] = a.split(', ')
+  const [bLast] = b.split(', ')
+  return aLast.localeCompare(bLast)
+})
+console.table(sortedPeopleByLastName)

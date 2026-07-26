@@ -1,30 +1,30 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Routes from './Routes';
-import Header from './component/Header';
-import Footer from './component/Footer';
-import { ThemeProvider } from 'styled-components';
-import { colors, media } from './theme';
-import GlobalStyle from './GlobalStyle.jsx';
-import { trackPageView } from './lib/analytics';
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import Routes from './Routes'
+import Header from './component/Header'
+import Footer from './component/Footer'
+import { ThemeProvider } from 'styled-components'
+import { colors, media } from './theme'
+import GlobalStyle from './GlobalStyle.jsx'
+import { trackPageView } from './lib/analytics'
 
 const theme = {
   colors,
   media,
-};
+}
 
 const AnalyticsListener = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
     trackPageView({
       path: location.pathname,
       title: document.title,
-    });
-  }, [location.pathname]);
+    })
+  }, [location.pathname])
 
-  return null;
-};
+  return null
+}
 
 const App = () => (
   <ThemeProvider theme={theme}>
@@ -39,6 +39,6 @@ const App = () => (
     </main>
     <Footer />
   </ThemeProvider>
-);
+)
 
-export default App;
+export default App

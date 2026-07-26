@@ -1,9 +1,17 @@
-import js from '@eslint/js';
-import globals from 'globals';
+import js from '@eslint/js'
+import globals from 'globals'
 
 export default [
   {
-    ignores: ['dist', 'node_modules', 'build', 'coverage', '.vite', '.husky', '.vscode'],
+    ignores: [
+      'dist',
+      'node_modules',
+      'build',
+      'coverage',
+      '.vite',
+      '.husky',
+      '.vscode',
+    ],
   },
   js.configs.recommended,
   {
@@ -31,4 +39,4 @@ export default [
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
-];
+]

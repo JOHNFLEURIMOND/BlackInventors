@@ -1,107 +1,301 @@
 # Black Inventors Archive
 
-A modern React + Vite digital archive highlighting Black inventors, their impact, and discoverable inventor profiles.
+> A modern interactive archive celebrating the innovators, engineers, scientists, and creators whose inventions shaped history.
 
-## Tech Stack
+🔗 **Live Demo:** https://johnfleurimond.com/
+
+## Overview
+
+The **Black Inventors Archive** is a modern React-powered experience designed to make the stories and contributions of Black inventors easier to discover, explore, and share.
+
+The application transforms historical records into an interactive archive featuring inventor profiles, searchable collections, and a clean user experience built with modern frontend technologies.
+
+The goal is simple:
+
+**Preserve history. Improve discoverability. Inspire future innovators.**
+
+---
+
+# Features
+
+## 🔎 Discover Inventors
+
+Explore a curated collection of Black inventors and innovators across different eras and industries.
+
+Users can:
+
+- Browse inventor profiles
+- Search inventors by name
+- Filter by historical era
+- Explore individual inventor detail pages
+
+---
+
+## 📚 Detailed Inventor Profiles
+
+Each profile provides a focused view into an inventor's:
+
+- Background
+- Contributions
+- Innovations
+- Historical impact
+
+The profile experience is designed to make complex historical information approachable and engaging.
+
+---
+
+## ⚡ Fast Modern Experience
+
+Built with a modern frontend stack focused on:
+
+- Fast page loads
+- Responsive layouts
+- Component-driven architecture
+- Maintainable code organization
+
+---
+
+## 📊 Lightweight Analytics Layer
+
+The application includes a custom analytics foundation to track meaningful user interactions.
+
+Tracked events include:
+
+- Page views
+- Search interactions
+- Filters
+- Inventor selections
+
+The analytics architecture is designed with privacy and maintainability in mind.
+
+---
+
+## 🔍 Search & Discovery Experience
+
+The archive includes:
+
+- Real-time search
+- Historical filtering
+- Dynamic inventor loading
+- User-friendly navigation
+
+Designed to help users quickly find stories that interest them.
+
+---
+
+# Tech Stack
+
+## Frontend
 
 - React 18
-- React Router 6
+- React Router
 - styled-components
-- Vite
-- Vitest + Testing Library
+- Vite 8
+- JavaScript (ES6+)
 
-## Current Capabilities
+## Testing
 
-- Hero-first homepage with lazy-loaded archive section
-- Search, era filter, and sorting for inventor discovery
-- Canonical slug/id normalization via a single data loader
-- Detail route for inventor profiles (`/inventor/:slug`)
-- Basic analytics event layer (dataLayer-based)
-- SEO support files (`robots.txt`, `sitemap.xml`)
+- Vitest
+- React Testing Library
 
-## Getting Started
+## Code Quality
 
-### Requirements
+- ESLint
+- Prettier
+- Husky
+- lint-staged
 
-- Node.js 20+
-- npm 10+
+## Tooling
 
-### Install
+- Node.js 22
+- npm
+- GitHub Actions CI
+
+---
+
+# Screenshots
+
+_Add screenshots or GIF demonstrations here._
+
+Recommended examples:
+
+- Archive homepage
+- Search experience
+- Inventor detail page
+- Mobile responsive view
+
+---
+
+# Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/JOHNFLEURIMOND/BlackInventors.git
+
 cd BlackInventors
+```
+
+Install dependencies:
+
+```bash
 npm install
 ```
 
-## Scripts
+---
 
-- `npm run dev` - Start local development server
-- `npm run build` - Build production assets to `dist/`
-- `npm run preview` - Serve the production build locally
-- `npm test` - Run test suite
-- `npm run lint` - Run lint checks
-- `npm run format` - Run Prettier
+# Development
 
-## Build + Verify
+Start the local development server:
+
+```bash
+npm run dev
+```
+
+The application will be available locally through the Vite development server.
+
+---
+
+# Production Build
+
+Create an optimized production build:
 
 ```bash
 npm run build
 ```
 
-After build, verify these files exist:
+---
 
-- `dist/robots.txt`
-- `dist/sitemap.xml`
+# Quality Checks
 
-## SEO Files
+Before committing changes, run:
 
-Source files:
+```bash
+npm run lint
+npm run test
+npm run build
+npm run audit
+```
 
-- `public/robots.txt`
-- `public/sitemap.xml`
+These checks validate:
 
-Expected endpoints in preview/production:
+- Code quality
+- Application behavior
+- Production builds
+- Dependency security
 
-- `/robots.txt`
-- `/sitemap.xml`
+---
 
-## Netlify Deployment Notes
+# Architecture
 
-If you do not see your latest changes on Netlify, check branch configuration first.
-
-1. Open Site settings -> Build and deploy -> Continuous Deployment.
-2. Confirm the production branch matches your working branch.
-3. Confirm build settings:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-4. Trigger a clear-cache deploy if needed.
-
-If production is still on an older branch (for example `master` while your work is on `redesign/modern-ui`), Netlify will deploy old code even if local build is correct.
-
-## Testing Coverage
-
-Current tests include:
-
-- data loader slug uniqueness and duplicate handling
-- inventor card rendering
-- search/filter behavior
-- route navigation to detail page
-
-## Project Structure
+The project follows a component-based React architecture:
 
 ```text
 src/
-  component/
-  containers/
-  hooks/
-  lib/
-  pages/
-  data/
-public/
-dist/
+├── component/       # Reusable UI components
+├── containers/      # Page-level layouts
+├── hooks/           # Reusable React hooks
+├── lib/             # Application utilities and services
+├── pages/           # Route-based pages
+├── data/            # Archive data sources
+└── styles/          # Global styling
 ```
 
-## License
+---
 
-Fleurimond 2026
+# Data Flow
+
+The application follows a simple data pipeline:
+
+```
+Archive Data
+      |
+      ↓
+Data Loader
+      |
+      ↓
+React Components
+      |
+      ↓
+User Interaction
+      |
+      ↓
+Analytics Events
+```
+
+This keeps data processing, presentation, and tracking separated.
+
+---
+
+# Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Add required environment values before running the application.
+
+Never commit `.env` files containing private credentials.
+
+---
+
+# SEO
+
+The application includes static SEO resources:
+
+```
+/robots.txt
+/sitemap.xml
+```
+
+These improve:
+
+- Search engine discoverability
+- Site indexing
+- Public accessibility
+
+---
+
+# Testing Strategy
+
+The project includes automated coverage for:
+
+- Data loading behavior
+- Component rendering
+- User interactions
+- Navigation flows
+
+Example:
+
+```bash
+npm run test
+```
+
+---
+
+# Future Improvements
+
+Potential enhancements:
+
+- Additional inventor collections
+- Timeline exploration
+- Industry/category filtering
+- More detailed historical sources
+- Accessibility improvements
+- Progressive Web App support
+
+---
+
+# Why This Project Exists
+
+History is often shaped by innovation, but many innovators do not receive equal visibility.
+
+The Black Inventors Archive is an effort to create a modern, accessible way to learn about the people behind important ideas and technologies.
+
+---
+
+# License
+
+© Fleurimond 2026

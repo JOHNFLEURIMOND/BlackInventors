@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import './Header.css';
+import { Link } from 'react-router-dom'
+import './Header.css'
 
 const headerDate = new Intl.DateTimeFormat('en-US', {
   weekday: 'short',
@@ -8,7 +8,7 @@ const headerDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   hour: 'numeric',
   minute: '2-digit',
-}).format(new Date());
+}).format(new Date())
 
 const Header = () => {
   return (
@@ -31,7 +31,7 @@ const Header = () => {
         </nav>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

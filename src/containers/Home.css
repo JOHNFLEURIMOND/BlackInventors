@@ -18,7 +18,12 @@
   gap: 1.4rem;
   text-align: left;
   padding: 3.2rem;
-  background: radial-gradient(circle at 0% 0%, #2d3f56 0%, #1f2937 35%, #111827 100%);
+  background: radial-gradient(
+    circle at 0% 0%,
+    #2d3f56 0%,
+    #1f2937 35%,
+    #111827 100%
+  );
   color: #f9fafb;
   border-radius: 2rem;
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);

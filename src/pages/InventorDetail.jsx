@@ -1,26 +1,28 @@
-import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import useInventors from '../hooks/useInventors';
-import './InventorDetail.css';
+import { useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import useInventors from '../hooks/useInventors'
+import './InventorDetail.css'
 
 export default function InventorDetail() {
-  const { slug } = useParams();
-  const { loading, error, getBySlug, getById } = useInventors();
-  const inventor = getBySlug(slug);
+  const { slug } = useParams()
+  const { loading, error, getBySlug, getById } = useInventors()
+  const inventor = getBySlug(slug)
 
   useEffect(() => {
-    if (loading) return;
+    if (loading) return
 
     if (!inventor) {
-      document.title = 'Inventor Not Found | Black Inventors Archive';
-      return;
+      document.title = 'Inventor Not Found | Black Inventors Archive'
+      return
     }
 
-    document.title = `${inventor.displayName} | Black Inventors Archive`;
-  }, [inventor, loading]);
+    document.title = `${inventor.displayName} | Black Inventors Archive`
+  }, [inventor, loading])
 
-  if (loading) return <div className="inventor-detail-shell">Loading inventor...</div>;
-  if (error) return <div className="inventor-detail-shell">Error loading data.</div>;
+  if (loading)
+    return <div className="inventor-detail-shell">Loading inventor...</div>
+  if (error)
+    return <div className="inventor-detail-shell">Error loading data.</div>
 
   if (!inventor) {
     return (
@@ -31,12 +33,12 @@ export default function InventorDetail() {
           <Link to="/">Return home</Link>
         </p>
       </main>
-    );
+    )
   }
 
-  const related = inventor.relatedIds.map((id) => getById(id)).filter(Boolean);
-  const displayName = inventor.displayName;
-  const lifespan = `${inventor.birthYear}${inventor.deathYear ? ` - ${inventor.deathYear}` : ' - Present'}`;
+  const related = inventor.relatedIds.map((id) => getById(id)).filter(Boolean)
+  const displayName = inventor.displayName
+  const lifespan = `${inventor.birthYear}${inventor.deathYear ? ` - ${inventor.deathYear}` : ' - Present'}`
 
   return (
     <main className="inventor-detail-shell">
@@ -51,7 +53,8 @@ export default function InventorDetail() {
             <h1 id="inv-title">{displayName}</h1>
             <p className="detail-years">{lifespan}</p>
             <p className="detail-summary">
-              {inventor.summary || 'A pioneer whose work advanced modern innovation.'}
+              {inventor.summary ||
+                'A pioneer whose work advanced modern innovation.'}
             </p>
 
             {inventor.categories.length > 0 && (
@@ -70,7 +73,8 @@ export default function InventorDetail() {
             <p className="detail-fact-value">{lifespan}</p>
             <p className="detail-fact-label">Notable Categories</p>
             <p className="detail-fact-value">
-              {inventor.categories.slice(0, 2).join(' · ') || 'General innovation'}
+              {inventor.categories.slice(0, 2).join(' · ') ||
+                'General innovation'}
             </p>
           </aside>
         </header>
@@ -121,7 +125,9 @@ export default function InventorDetail() {
             <ul className="detail-list">
               {related.map((person) => (
                 <li key={person.id}>
-                  <Link to={`/inventor/${person.slug}`}>{person.displayName}</Link>
+                  <Link to={`/inventor/${person.slug}`}>
+                    {person.displayName}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -129,5 +135,5 @@ export default function InventorDetail() {
         </section>
       </article>
     </main>
-  );
+  )
 }

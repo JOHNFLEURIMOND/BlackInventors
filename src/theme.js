@@ -75,18 +75,18 @@ export const colors = {
     text: '#000000', // Black text for high contrast
     background: '#FFFFFF', // White background for high contrast
   },
-};
+}
 
 // Define media breakpoints
 export const media = {
   tab: '768px', // Tablet breakpoint
   mobile: '480px', // Mobile breakpoint
-};
+}
 
 // Export theme object containing colors and media
 const FleurimondTheme = {
   colors,
   media,
-};
+}
 
-export default FleurimondTheme;
+export default FleurimondTheme

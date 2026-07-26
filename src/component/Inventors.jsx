@@ -1,25 +1,25 @@
-import { useMemo, useState } from 'react';
-import './Inventors.css';
-import InventorCard from './InventorCard';
-import useInventors from '../hooks/useInventors';
-import { trackFilter, trackInventorClick, trackSearch } from '../lib/analytics';
+import { useMemo, useState } from 'react'
+import './Inventors.css'
+import InventorCard from './InventorCard'
+import useInventors from '../hooks/useInventors'
+import { trackFilter, trackInventorClick, trackSearch } from '../lib/analytics'
 
-const ERAS = ['all', '1700s', '1800s', '1900s', '2000+'];
+const ERAS = ['all', '1700s', '1800s', '1900s', '2000+']
 
 function getEra(year) {
-  if (!year) return 'unknown';
-  if (year < 1800) return '1700s';
-  if (year < 1900) return '1800s';
-  if (year < 2000) return '1900s';
-  return '2000+';
+  if (!year) return 'unknown'
+  if (year < 1800) return '1700s'
+  if (year < 1900) return '1800s'
+  if (year < 2000) return '1900s'
+  return '2000+'
 }
 
 const Inventors = () => {
-  const { inventors, loading, error } = useInventors();
-  const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('all');
-  const [era, setEra] = useState('all');
-  const [sort, setSort] = useState('name-asc');
+  const { inventors, loading, error } = useInventors()
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('all')
+  const [era, setEra] = useState('all')
+  const [sort, setSort] = useState('name-asc')
 
   const eraCounts = useMemo(() => {
     const counts = {
@@ -28,24 +28,24 @@ const Inventors = () => {
       '1800s': 0,
       '1900s': 0,
       '2000+': 0,
-    };
+    }
     inventors.forEach((inventor) => {
-      const value = getEra(inventor.birthYear);
-      if (counts[value] !== undefined) counts[value] += 1;
-    });
-    return counts;
-  }, [inventors]);
+      const value = getEra(inventor.birthYear)
+      if (counts[value] !== undefined) counts[value] += 1
+    })
+    return counts
+  }, [inventors])
 
   const categories = useMemo(() => {
-    const set = new Set();
+    const set = new Set()
     inventors.forEach((inventor) => {
-      inventor.categories.forEach((item) => set.add(item));
-    });
-    return Array.from(set).sort((a, b) => a.localeCompare(b));
-  }, [inventors]);
+      inventor.categories.forEach((item) => set.add(item))
+    })
+    return Array.from(set).sort((a, b) => a.localeCompare(b))
+  }, [inventors])
 
   const featured = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = query.trim().toLowerCase()
 
     const filtered = inventors.filter((inventor) => {
       const searchable = [
@@ -56,38 +56,44 @@ const Inventors = () => {
         ...inventor.categories,
       ]
         .join(' ')
-        .toLowerCase();
+        .toLowerCase()
 
-      const matchesQuery = !normalizedQuery || searchable.includes(normalizedQuery);
-      const matchesCategory = category === 'all' || inventor.categories.includes(category);
-      const matchesEra = era === 'all' || getEra(inventor.birthYear) === era;
+      const matchesQuery =
+        !normalizedQuery || searchable.includes(normalizedQuery)
+      const matchesCategory =
+        category === 'all' || inventor.categories.includes(category)
+      const matchesEra = era === 'all' || getEra(inventor.birthYear) === era
 
-      return matchesQuery && matchesCategory && matchesEra;
-    });
+      return matchesQuery && matchesCategory && matchesEra
+    })
 
-    const sorted = [...filtered];
+    const sorted = [...filtered]
     sorted.sort((a, b) => {
-      if (sort === 'birth-asc') return (a.birthYear || 0) - (b.birthYear || 0);
+      if (sort === 'birth-asc') return (a.birthYear || 0) - (b.birthYear || 0)
       if (sort === 'recent')
-        return (b.deathYear || b.birthYear || 0) - (a.deathYear || a.birthYear || 0);
-      return a.displayName.localeCompare(b.displayName);
-    });
+        return (
+          (b.deathYear || b.birthYear || 0) - (a.deathYear || a.birthYear || 0)
+        )
+      return a.displayName.localeCompare(b.displayName)
+    })
 
-    return sorted;
-  }, [inventors, query, category, era, sort]);
+    return sorted
+  }, [inventors, query, category, era, sort])
 
   const activeFilters = [
     query ? { key: 'query', label: `Search: ${query}` } : null,
-    category !== 'all' ? { key: 'category', label: `Category: ${category}` } : null,
+    category !== 'all'
+      ? { key: 'category', label: `Category: ${category}` }
+      : null,
     era !== 'all' ? { key: 'era', label: `Era: ${era}` } : null,
     sort !== 'name-asc' ? { key: 'sort', label: `Sort: ${sort}` } : null,
-  ].filter(Boolean);
+  ].filter(Boolean)
 
   function resetFilters() {
-    setQuery('');
-    setCategory('all');
-    setEra('all');
-    setSort('name-asc');
+    setQuery('')
+    setCategory('all')
+    setEra('all')
+    setSort('name-asc')
   }
 
   if (loading) {
@@ -103,7 +109,7 @@ const Inventors = () => {
           </h2>
         </div>
       </section>
-    );
+    )
   }
 
   if (error) {
@@ -120,7 +126,7 @@ const Inventors = () => {
           <p className="inventors-copy">Please refresh and try again.</p>
         </div>
       </section>
-    );
+    )
   }
 
   return (
@@ -135,8 +141,8 @@ const Inventors = () => {
           Voices behind the inventions
         </h2>
         <p className="inventors-copy">
-          Explore a selection of visionary figures whose work redefined what was possible in
-          science, engineering, and everyday life.
+          Explore a selection of visionary figures whose work redefined what was
+          possible in science, engineering, and everyday life.
         </p>
 
         <div className="era-strip" role="group" aria-label="Filter by era">
@@ -146,8 +152,8 @@ const Inventors = () => {
               type="button"
               className={`era-pill ${item === era ? 'era-pill--active' : ''}`}
               onClick={() => {
-                setEra(item);
-                trackFilter({ type: 'era', value: item });
+                setEra(item)
+                trackFilter({ type: 'era', value: item })
               }}
             >
               <span>{item === 'all' ? 'All Eras' : item}</span>
@@ -167,9 +173,9 @@ const Inventors = () => {
               type="search"
               value={query}
               onChange={(event) => {
-                const value = event.target.value;
-                setQuery(value);
-                trackSearch({ query: value });
+                const value = event.target.value
+                setQuery(value)
+                trackSearch({ query: value })
               }}
               placeholder="Search by name, field, or keyword"
             />
@@ -181,9 +187,9 @@ const Inventors = () => {
               id="inventor-category"
               value={category}
               onChange={(event) => {
-                const value = event.target.value;
-                setCategory(value);
-                trackFilter({ type: 'category', value });
+                const value = event.target.value
+                setCategory(value)
+                trackFilter({ type: 'category', value })
               }}
             >
               <option value="all">All categories</option>
@@ -201,9 +207,9 @@ const Inventors = () => {
               id="inventor-era"
               value={era}
               onChange={(event) => {
-                const value = event.target.value;
-                setEra(value);
-                trackFilter({ type: 'era', value });
+                const value = event.target.value
+                setEra(value)
+                trackFilter({ type: 'era', value })
               }}
             >
               <option value="all">All eras</option>
@@ -231,7 +237,9 @@ const Inventors = () => {
         <div className="filters-row">
           <div className="active-filters" aria-live="polite">
             {activeFilters.length === 0 ? (
-              <span className="filter-chip filter-chip--ghost">No active filters</span>
+              <span className="filter-chip filter-chip--ghost">
+                No active filters
+              </span>
             ) : (
               activeFilters.map((item) => (
                 <button
@@ -239,10 +247,10 @@ const Inventors = () => {
                   type="button"
                   className="filter-chip"
                   onClick={() => {
-                    if (item.key === 'query') setQuery('');
-                    if (item.key === 'category') setCategory('all');
-                    if (item.key === 'era') setEra('all');
-                    if (item.key === 'sort') setSort('name-asc');
+                    if (item.key === 'query') setQuery('')
+                    if (item.key === 'category') setCategory('all')
+                    if (item.key === 'era') setEra('all')
+                    if (item.key === 'sort') setSort('name-asc')
                   }}
                 >
                   {item.label}
@@ -251,7 +259,11 @@ const Inventors = () => {
             )}
           </div>
 
-          <button type="button" className="reset-filters" onClick={resetFilters}>
+          <button
+            type="button"
+            className="reset-filters"
+            onClick={resetFilters}
+          >
             Reset all
           </button>
         </div>
@@ -265,8 +277,14 @@ const Inventors = () => {
         {featured.length === 0 ? (
           <div className="empty-state" role="status" aria-live="polite">
             <h3>No inventors match your current filters.</h3>
-            <p>Try clearing one or more filters to expand the archive results.</p>
-            <button type="button" className="reset-filters" onClick={resetFilters}>
+            <p>
+              Try clearing one or more filters to expand the archive results.
+            </p>
+            <button
+              type="button"
+              className="reset-filters"
+              onClick={resetFilters}
+            >
               Clear filters
             </button>
           </div>
@@ -285,7 +303,7 @@ const Inventors = () => {
                     inventorId: selected.id,
                     category: selected.categories[0] || 'uncategorized',
                     position: position + 1,
-                  });
+                  })
                 }}
               />
             </div>
@@ -293,7 +311,7 @@ const Inventors = () => {
         )}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Inventors;
+export default Inventors

@@ -1,4 +1,4 @@
-import './Footer.css';
+import './Footer.css'
 
 const footerDate = new Intl.DateTimeFormat('en-US', {
   weekday: 'short',
@@ -7,7 +7,7 @@ const footerDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   hour: 'numeric',
   minute: '2-digit',
-}).format(new Date());
+}).format(new Date())
 
 const Footer = () => {
   return (
@@ -15,7 +15,9 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-brand">
           <span className="footer-brand__name">Black Inventors</span>
-          <span className="footer-brand__meta">Curated stories of innovation</span>
+          <span className="footer-brand__meta">
+            Curated stories of innovation
+          </span>
         </div>
         <ul className="footer-list">
           <li className="footer-list-item">
@@ -72,7 +74,7 @@ const Footer = () => {
         </ul>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
