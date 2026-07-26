@@ -1,43 +1,56 @@
-import React, { Component } from "react";
-import { Animated } from "react-animated-css";
+import React, { lazy, Suspense } from "react";
 import "./Home.css";
 
-export default class Home extends Component {
-  render() {
-    return (
+const Inventors = lazy(() => import("../component/Inventors"));
+
+const Home = () => {
+  return (
+    <>
       <div className="home-container">
         <div className="home-content">
-          <Animated
-            animationInDelay={100}
-            animationIn="fadeIn"
-            animationOut="fadeOut"
-            isVisible
-          >
-            <section className="hero-section">
-              <h1 className="hero-title">Black Inventors</h1>
-              <p className="hero-description">
-                This is an application that shows famous Black inventors'
-                history.
-              </p>
-              <p className="hero-details">
-                Higher order functions like reduce to show long-lived inventors,
-                map the inventors alphabetically by first & last name, and
-                filter the inventors from oldest to youngest.
-              </p>
-              <p className="hero-action">
-                <a
-                  className="hero-button"
-                  href="https://github.com/JOHNFLEURIMOND/BlackInventors"
-                  role="button"
-                  aria-label="Learn more about Black Inventors"
-                >
-                  Learn More
-                </a>
-              </p>
-            </section>
-          </Animated>
+          <section className="hero-section" aria-labelledby="hero-title">
+            <p className="eyebrow">Digital Museum Archive</p>
+            <h1 id="hero-title" className="hero-title">
+              Black Inventors
+            </h1>
+            <p className="hero-description">
+              Discover a curated collection of Black innovators whose work
+              shaped modern life across science, technology, and design.
+            </p>
+            <p className="hero-details">
+              This experience highlights the breadth of invention, creativity,
+              and perseverance behind a remarkable legacy.
+            </p>
+            <p className="hero-action">
+              <a
+                className="hero-button"
+                href="#featured-innovators"
+                aria-label="Jump to featured innovators"
+              >
+                Explore the archive
+              </a>
+            </p>
+          </section>
         </div>
       </div>
-    );
-  }
-}
+      <Suspense
+        fallback={
+          <section
+            className="inventors-container"
+            aria-labelledby="inventors-heading"
+          >
+            <div className="inventors-intro">
+              <h2 id="inventors-heading" className="inventors-title">
+                Loading the archive...
+              </h2>
+            </div>
+          </section>
+        }
+      >
+        <Inventors />
+      </Suspense>
+    </>
+  );
+};
+
+export default Home;

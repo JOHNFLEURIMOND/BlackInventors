@@ -1,0 +1,71 @@
+{
+  "totalRecords": 61,
+  "uniqueBaseSlugs": 60,
+  "collisionGroups": [
+    {
+      "baseSlug": "edward-bouchet",
+      "count": 2,
+      "records": [
+        {
+          "index": 10,
+          "displayName": "Edward Bouchet",
+          "birthYear": 1852,
+          "deathYear": 1918,
+          "raw": {
+            "first": "Edward",
+            "last": "Bouchet",
+            "year": 1852,
+            "passed": 1918
+          }
+        },
+        {
+          "index": 32,
+          "displayName": "Edward Bouchet",
+          "birthYear": 1852,
+          "deathYear": 1918,
+          "raw": {
+            "first": "Edward",
+            "last": "Bouchet",
+            "year": 1852,
+            "passed": 1918
+          }
+        }
+      ],
+      "recommendations": [
+        {
+          "displayName": "Edward Bouchet",
+          "birthYear": 1852,
+          "deathYear": 1918,
+          "index": 10,
+          "proposedSlug": "edward-bouchet-1852-a06a5a",
+          "reason": "appended deterministic hash fallback"
+        },
+        {
+          "displayName": "Edward Bouchet",
+          "birthYear": 1852,
+          "deathYear": 1918,
+          "index": 32,
+          "proposedSlug": "edward-bouchet-1852-a06a5a",
+          "reason": "appended deterministic hash fallback"
+        }
+      ],
+      "classifications": [
+        {
+          "index": 10,
+          "classification": "duplicate record"
+        },
+        {
+          "index": 32,
+          "classification": "duplicate record"
+        }
+      ]
+    }
+  ],
+  "likelyDuplicates": [
+    10,
+    32
+  ],
+  "requiresReview": [],
+  "collisionsFound": 1,
+  "recordsRequiringReview": 0
+}

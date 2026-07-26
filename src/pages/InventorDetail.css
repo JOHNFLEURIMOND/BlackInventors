@@ -1,0 +1,37 @@
+.inventor-detail-shell {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+}
+
+.detail-nav a {
+    color: #1f4f7a;
+    font-weight: 600;
+}
+
+.inventor-detail-card {
+    margin-top: 1rem;
+    border: 1px solid rgba(17, 24, 39, 0.1);
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+}
+
+.detail-hero h1 {
+    margin-bottom: 0.5rem;
+}
+
+.detail-dates {
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+}
+
+.detail-section {
+    margin-top: 1.5rem;
+}
+
+.detail-section h2 {
+    font-size: 1.45rem;
+    margin-bottom: 0.5rem;
+}
