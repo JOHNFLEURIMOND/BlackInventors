@@ -1,49 +1,51 @@
-.footer {
-  background-color: #f8f9fa; /* Background color for footer */
-  padding: 20px;
-  text-align: center;
+.header {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background: #f8f5ef;
 }
 
-.footer-content {
-  max-width: 1200px;
+.header-content {
+  max-width: 112rem;
   margin: 0 auto;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
 }
 
-.footer-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.brand-mark {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.footer-list-item {
-  display: inline;
-  margin-right: 15px;
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #4b5563;
 }
 
-.footer-link {
-  text-decoration: none;
-  color: #007bff; /* Change this to your preferred link color */
+.header-date {
+  font-size: 0.95rem;
 }
 
-.footer-link:hover {
-  text-decoration: underline;
+.header-link {
+  color: #2563eb;
+  font-weight: 600;
 }
 
-.yellow-link {
-  color: yellow; /* Adjust this color as needed */
-}
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.footer-date {
-  font-weight: bold;
-}
-
-.tablet-hidden {
-  display: none;
-}
-
-/* Media query for tablets and up */
-@media (min-width: 768px) {
-  .tablet-hidden {
-    display: inline;
+  .header-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
   }
 }

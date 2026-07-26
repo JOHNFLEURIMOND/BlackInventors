@@ -1,60 +1,35 @@
-import React, { Component } from "react";
-import moment from "moment";
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Header.css";
 
-export class Footer extends Component {
-  render() {
-    return (
-      <div>
-        <footer className="footer">
-          <div className="footer-content">
-            <ul className="footer-list footer-list-right">
-              <li className="footer-list-item">
-                <a
-                  href="http://www.cityofboston.gov/311/"
-                  className="footer-link yellow-link"
-                >
-                  <span className="footer-date">{moment().format("llll")}</span>
-                  <span className="tablet-hidden"> - </span>
-                </a>
-              </li>
-            </ul>
-            <ul className="footer-list">
-              <li className="footer-list-item">
-                <a href="https://johnfleurimond.com" className="footer-link">
-                  John Fleurimond
-                </a>
-              </li>
-              <li className="footer-list-item">
-                <a
-                  href="https://twitter.com/tcodemonger"
-                  className="footer-link"
-                >
-                  Twitter
-                </a>
-              </li>
-              <li className="footer-list-item">
-                <a
-                  href="https://github.com/JOHNFLEURIMOND"
-                  className="footer-link"
-                >
-                  Github
-                </a>
-              </li>
-              <li className="footer-list-item">
-                <a
-                  href="https://www.linkedin.com/in/john-fleurimond/"
-                  className="footer-link"
-                  title="Linkedin"
-                >
-                  Linkedin
-                </a>
-              </li>
-            </ul>
-          </div>
-        </footer>
+const headerDate = new Intl.DateTimeFormat("en-US", {
+  weekday: "short",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+}).format(new Date());
+
+const Header = () => {
+  return (
+    <header className="header" role="banner">
+      <div className="header-content">
+        <Link to="/" className="brand-mark" aria-label="Go to homepage">
+          Black Inventors
+        </Link>
+        <div className="header-meta">
+          <span className="header-date">{headerDate}</span>
+          <a
+            href="https://github.com/JOHNFLEURIMOND/BlackInventors"
+            className="header-link"
+          >
+            Project Repo
+          </a>
+        </div>
       </div>
-    );
-  }
-}
+    </header>
+  );
+};
 
-export default Footer;
+export default Header;

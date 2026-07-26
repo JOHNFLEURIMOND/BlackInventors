@@ -41,6 +41,7 @@ const GlobalStyle = createGlobalStyle`
     color: var(--color-primary-text);
     scrollbar-color: var(--color-accent);
     scrollbar-width: thin;
+    line-height: 1.6;
   }
 
   body::-webkit-scrollbar {
@@ -69,7 +70,6 @@ const GlobalStyle = createGlobalStyle`
     color: var(--color-primary-text);
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-subheading);
-    text-align: center;
     font-family: var(--font-heading);
   }
 
@@ -81,15 +81,34 @@ const GlobalStyle = createGlobalStyle`
 
   p {
     color: var(--color-primary-text);
-    opacity: 0.7;
+    opacity: 0.8;
     font-size: var(--font-size-xs);
-    line-height: 1.5;
+    line-height: 1.6;
     margin-top: 1rem;
   }
 
   a {
     text-decoration: none;
     color: var(--color-accent);
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 16px;
+    z-index: 1000;
+    background: #111827;
+    color: #f9fafb;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.4rem;
+  }
+
+  .skip-link:focus {
+    top: 12px;
+  }
+
+  .main-content {
+    min-height: 100vh;
   }
 
   li {
