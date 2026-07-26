@@ -1,205 +1,107 @@
-# :checkered_flag:Project Overview :checkered_flag::
+# Black Inventors Archive
 
-## How It's Made :nut_and_bolt:🔨 :hammer::wrench::
+A modern React + Vite digital archive highlighting Black inventors, their impact, and discoverable inventor profiles.
 
-This application is built with the following technologies:
+## Tech Stack
 
-- **Frontend:** React.js, styled-components, Formik
-- **Backend:** Express.js, Node.js
-- **Build Tool:** Vite
+- React 18
+- React Router 6
+- styled-components
+- Vite
+- Vitest + Testing Library
 
-## Optimizations
+## Current Capabilities
 
-This is a basic template layout to kickstart fullstack applications. It is optimized for development and can be further customized for specific use cases.
+- Hero-first homepage with lazy-loaded archive section
+- Search, era filter, and sorting for inventor discovery
+- Canonical slug/id normalization via a single data loader
+- Detail route for inventor profiles (`/inventor/:slug`)
+- Basic analytics event layer (dataLayer-based)
+- SEO support files (`robots.txt`, `sitemap.xml`)
 
-### Verify Node.js and npm Versions
+## Getting Started
 
-To check your current Node.js and npm versions:
+### Requirements
 
-```bash
-node -v && npm -v
-# Example output:
-# v20.15.0
-# 10.7.0
-```
+- Node.js 20+
+- npm 10+
 
-### Install and Use the Correct Node.js Version
-
-To install and use the correct Node.js version:
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-nvm install 20
-```
-
-## My Awesome Project & Lessons Learned :mortar_board::
-
-For more details on the project and the lessons learned, please refer to [My Portfolio](http://johnfleurimond.com).
-
-## Getting Started :arrow_forward::
-
-### Kill Node Processes
-
-To stop any running Node.js processes:
+### Install
 
 ```bash
-sudo kill -9 $(ps aux | grep node | grep -v grep | awk '{print $2}')
-```
-
-### Installation
-
-1. **Clone the Repository:**
-
-   ```bash
-   git clone {{repository-url}}
-   cd {{repository-directory}}
-   ```
-
-2. **Install Dependencies:**
-   ```bash
-   npm install
-   ```
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run serve`
-
-**Example Output:**
-
-```
-VITE v5.3.5  ready in 107 ms
-
-  ➜  Local:   http://localhost:5177/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
-```
-
-Runs the app in development mode. Open [http://localhost:5177](http://localhost:5177) to view it in your browser. The page will reload if you make edits, and lint errors will be displayed in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder. This bundles React in production mode and optimizes the build for the best performance. The build is minified, and the filenames include hashes. Your app is ready to be deployed.
-
-See the [Deployment](#deployment) section for more information.
-
-### `npm run prettier`
-
-Formats the code according to Prettier configuration.
-
-## :keyboard::computer_mouse::desktop_computer::computer:: GitHub :computer::desktop_computer::keyboard::
-
-### :broom::soap: Clean Up Code Before Pushing :soap::broom:
-
-Before pushing changes to the repository, clean up the code and update dependencies:
-
-```bash
-npm run prettier
-rm -rf package-lock.json
-rm -rf node_modules
-git add .
-git commit -m "Update README"
-git push
-```
-
-or
-
-```bash
-npm run prettier && rm -rf package-lock.json && rm -rf node_modules && git add . && git commit -m "Update README" && git push
-```
-
-To update dependencies and handle known issues:
-
-```bash
-rm -rf package-lock.json
-rm -rf node_modules
-npm install -g npm-check-updates
-ncu -u
+git clone https://github.com/JOHNFLEURIMOND/BlackInventors.git
+cd BlackInventors
 npm install
-npm ls ajv
-npm install --save-dev ajv@^8
 ```
 
-or
+## Scripts
+
+- `npm run dev` - Start local development server
+- `npm run build` - Build production assets to `dist/`
+- `npm run preview` - Serve the production build locally
+- `npm test` - Run test suite
+- `npm run lint` - Run lint checks
+- `npm run format` - Run Prettier
+
+## Build + Verify
 
 ```bash
-rm -rf package-lock.json && rm -rf node_modules && npm install -g npm-check-updates && ncu -u && npm install && npm ls ajv && npm install --save-dev ajv@^8
+npm run build
 ```
 
-### :heavy_plus_sign::heavy_plus_sign: Merging Code :heavy_plus_sign::heavy_plus_sign:
+After build, verify these files exist:
 
-1. **Check Your Current Branch:**
-   List all branches and check your current branch:
+- `dist/robots.txt`
+- `dist/sitemap.xml`
 
-   ```bash
-   git branch -a
-   ```
+## SEO Files
 
-   If you need to create a new branch:
+Source files:
 
-   ```bash
-   git checkout -b {{name-of-your-branch}}
-   ```
+- `public/robots.txt`
+- `public/sitemap.xml`
 
-2. **Add and Commit Your Changes:**
-   Add and commit your work:
+Expected endpoints in preview/production:
 
-   ```bash
-   git add .
-   git commit -m "{{explain your changes}}"
-   git push
-   ```
+- `/robots.txt`
+- `/sitemap.xml`
 
-3. **Fetch and Pull Updates:**
-   Fetch and pull all changes from remote branches:
+## Netlify Deployment Notes
 
-   ```bash
-   git fetch --all
-   git pull --all
-   ```
+If you do not see your latest changes on Netlify, check branch configuration first.
 
-4. **Merge or Rebase:**
-   Merge changes from the main branch to your branch:
+1. Open Site settings -> Build and deploy -> Continuous Deployment.
+2. Confirm the production branch matches your working branch.
+3. Confirm build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+4. Trigger a clear-cache deploy if needed.
 
-   ```bash
-   git merge main
-   ```
+If production is still on an older branch (for example `master` while your work is on `redesign/modern-ui`), Netlify will deploy old code even if local build is correct.
 
-   Alternatively, you can rebase:
+## Testing Coverage
 
-   ```bash
-   git rebase main
-   ```
+Current tests include:
 
-   **Important:** Resolve any conflicts that arise, accept the incoming changes as needed, and commit the resolved changes:
+- data loader slug uniqueness and duplicate handling
+- inventor card rendering
+- search/filter behavior
+- route navigation to detail page
 
-   ```bash
-   git add .
-   git commit -m "Merged main branch into current branch"
-   git push
-   ```
+## Project Structure
 
-   or
-
-   ```bash
-   git add . && git commit -m "Merged main branch into current branch" && git push
-   ```
+```text
+src/
+  component/
+  containers/
+  hooks/
+  lib/
+  pages/
+  data/
+public/
+dist/
+```
 
 ## License
 
-Fleurimond 2024
-
-## Contributing
-
-## How It Works:white_check_mark::
-
-.....
-
-## Contact
-
-For any questions or feedback, please reach out to [Fleur](http://johnfleurimond.com).
-
-```
-
-```
+Fleurimond 2026
