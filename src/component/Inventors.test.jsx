@@ -20,15 +20,24 @@ describe("Inventors discovery", () => {
       </BrowserRouter>,
     );
 
-    const totalCards = screen.getAllByRole("group").length;
+    const getCards = () =>
+      screen
+        .getAllByRole("link", { name: /view details for/i })
+        .map((link) => link.closest("article"))
+        .filter(Boolean);
+
+    const totalCards = getCards().length;
 
     await user.type(screen.getByLabelText(/search/i), "Latimer");
-    expect(screen.getAllByRole("group")).toHaveLength(1);
+    expect(getCards()).toHaveLength(1);
 
     await user.clear(screen.getByLabelText(/search/i));
-    await user.selectOptions(screen.getByLabelText(/era/i), "1700s");
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /^era$/i }),
+      "1700s",
+    );
 
-    const filteredCards = screen.getAllByRole("group");
+    const filteredCards = getCards();
     expect(filteredCards.length).toBeGreaterThan(0);
     expect(filteredCards.length).toBeLessThan(totalCards);
 

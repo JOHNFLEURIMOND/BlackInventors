@@ -13,6 +13,19 @@ const InventorCard = ({ inventor, index, onSelect }) => {
     inventor.displayName ||
     `${inventor.firstName || ""} ${inventor.lastName || ""}`.trim();
   const image = inventor.images?.[0] || null;
+  const era = inventor.birthYear
+    ? inventor.birthYear < 1800
+      ? "1700s"
+      : inventor.birthYear < 1900
+        ? "1800s"
+        : inventor.birthYear < 2000
+          ? "1900s"
+          : "2000+"
+    : "Unknown era";
+  const knownFor =
+    inventor.summary || inventor.categories?.[0]
+      ? `Known for ${inventor.categories?.[0] || "innovation"}.`
+      : "Known for pioneering contributions.";
   const deathLabel = inventor.deathYear
     ? `d. ${inventor.deathYear}`
     : "Living legacy";
@@ -49,10 +62,12 @@ const InventorCard = ({ inventor, index, onSelect }) => {
         </div>
 
         <div className="card-content">
+          <p className="card-era">{era}</p>
           <p className="card-year">{inventor.birthYear || "Unknown year"}</p>
           <h3 id={`card-title-${index}`} className="card-name">
             {fullName}
           </h3>
+          <p className="card-known-for">{knownFor}</p>
           <p className="card-passed">{deathLabel}</p>
         </div>
       </Link>

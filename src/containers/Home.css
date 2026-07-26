@@ -12,12 +12,34 @@
 }
 
 .hero-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.4rem;
   text-align: left;
   padding: 3.2rem;
-  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  background: radial-gradient(circle at 0% 0%, #2d3f56 0%, #1f2937 35%, #111827 100%);
   color: #f9fafb;
   border-radius: 2rem;
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);
+  overflow: hidden;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.3;
+}
+
+.hero-copy,
+.hero-spotlight {
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow {
@@ -61,12 +83,60 @@
   background: #fde68a;
 }
 
+.hero-spotlight {
+  align-self: end;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+.spotlight-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #fbbf24;
+  font-size: 0.75rem;
+}
+
+.spotlight-name {
+  color: #ffffff;
+  font-size: 1.6rem;
+  margin-top: 0.35rem;
+}
+
+.spotlight-dates {
+  margin-top: 0.35rem;
+  color: rgba(226, 232, 240, 0.9);
+  font-size: 0.95rem;
+}
+
+.spotlight-copy {
+  margin-top: 0.65rem;
+  color: rgba(249, 250, 251, 0.92);
+  line-height: 1.6;
+}
+
+.spotlight-link {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.spotlight-link::after {
+  content: "→";
+}
+
 @media (max-width: 600px) {
   .home-container {
     padding: 1.6rem 1rem 2.8rem;
   }
 
   .hero-section {
+    grid-template-columns: 1fr;
     padding: 2rem;
   }
 

@@ -16,17 +16,20 @@ const Header = () => {
     <header className="header" role="banner">
       <div className="header-content">
         <Link to="/" className="brand-mark" aria-label="Go to homepage">
-          Black Inventors
+          <span className="brand-mark__name">Black Inventors</span>
+          <span className="brand-mark__tag">Museum archive</span>
         </Link>
-        <div className="header-meta">
+        <nav className="header-meta" aria-label="Header links">
           <span className="header-date">{headerDate}</span>
           <a
             href="https://github.com/JOHNFLEURIMOND/BlackInventors"
             className="header-link"
+            target="_blank"
+            rel="noreferrer"
           >
             Project Repo
           </a>
-        </div>
+        </nav>
       </div>
     </header>
   );
