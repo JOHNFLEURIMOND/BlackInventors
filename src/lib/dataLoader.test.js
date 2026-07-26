@@ -16,7 +16,7 @@ describe('dataLoader', () => {
     expect(inventors[0].id).toBe(inventors[0].slug)
   })
 
-  it('collapses duplicate raw records into one visible inventor', () => {
+  it('exposes exactly one visible inventor per slug (no duplicate raw records)', () => {
     const inventors = getAllInventors()
     const bouchetRecords = inventors.filter(
       (inventor) => inventor.slug === 'edward-bouchet'
@@ -24,6 +24,7 @@ describe('dataLoader', () => {
 
     expect(bouchetRecords).toHaveLength(1)
     expect(getInventorBySlug('edward-bouchet')).toBeTruthy()
-    expect(getDiagnostics().duplicates).toBeGreaterThan(0)
+    expect(getDiagnostics().duplicates).toBe(0)
+    expect(getDiagnostics().collisions).toBe(0)
   })
 })
