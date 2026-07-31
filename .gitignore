@@ -6,6 +6,7 @@
 
 # production build
 /dist
+/build
 
 # misc
 .DS_Store
@@ -24,4 +25,4 @@ audit.json
 # logs
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-error.log**.tsbuildinfo
