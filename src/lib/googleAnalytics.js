@@ -1,10 +1,10 @@
 import { readAnalyticsConsent } from './analyticsConsent'
 
-export const GA_MEASUREMENT_ID = 'G-Q1ZTCQG9RN'
+export const GTM_CONTAINER_ID = 'GTM-5RGK52GJ'
 
 const CONSENT_EVENT = 'analytics-consent-change'
 const CONSENT_KEY = 'analytics-consent-v1'
-const SCRIPT_ID = 'google-analytics-gtag'
+const SCRIPT_ID = 'analytics-gtm'
 const DENIED_CONSENT = {
   ad_storage: 'denied',
   ad_user_data: 'denied',
@@ -18,6 +18,7 @@ const ANALYTICS_ONLY_CONSENT = {
 
 let initialized = false
 let configured = false
+let unloading = false
 let lastPageLocation = null
 let previousPageLocation = null
 let pendingPageView = null
@@ -35,24 +36,22 @@ function sanitizePageLocation(path) {
   return new URL(pathname, window.location.origin).href
 }
 
-function loadGoogleTag() {
-  if (configured || readAnalyticsConsent() !== 'granted') return false
+function loadAnalyticsContainer() {
+  if (configured || unloading || readAnalyticsConsent() !== 'granted')
+    return false
 
   gtag('consent', 'default', DENIED_CONSENT)
   gtag('consent', 'update', ANALYTICS_ONLY_CONSENT)
   gtag('set', 'ads_data_redaction', true)
-  gtag('js', new Date())
-  gtag('config', GA_MEASUREMENT_ID, {
-    send_page_view: false,
-    allow_google_signals: false,
-    allow_ad_personalization_signals: false,
-  })
+  gtag('set', 'allow_google_signals', false)
+  gtag('set', 'allow_ad_personalization_signals', false)
+  window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' })
 
   if (!document.getElementById(SCRIPT_ID)) {
     const script = document.createElement('script')
     script.id = SCRIPT_ID
     script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`
     document.head.appendChild(script)
   }
 
@@ -62,7 +61,7 @@ function loadGoogleTag() {
 
 function sendPageView({ path, title }) {
   if (readAnalyticsConsent() !== 'granted') return false
-  if (!configured && !loadGoogleTag()) return false
+  if (!configured && !loadAnalyticsContainer()) return false
 
   const pageLocation = sanitizePageLocation(path)
   if (pageLocation === lastPageLocation) return false
@@ -90,13 +89,18 @@ function applyConsent() {
   const consent = readAnalyticsConsent()
 
   if (consent === 'granted') {
-    if (!configured) loadGoogleTag()
+    if (!configured) loadAnalyticsContainer()
     else gtag('consent', 'update', ANALYTICS_ONLY_CONSENT)
     flushPendingPageView()
     return
   }
 
-  if (configured) gtag('consent', 'update', DENIED_CONSENT)
+  if (configured && !unloading) {
+    unloading = true
+    gtag('consent', 'update', DENIED_CONSENT)
+    document.getElementById(SCRIPT_ID)?.remove()
+    window.location.reload()
+  }
 }
 
 export function initializeGoogleAnalytics() {
@@ -120,14 +124,14 @@ export function trackGooglePageView({ path, title } = {}) {
 }
 
 export function trackGoogleEvent(eventName, parameters = {}) {
-  if (
-    typeof window === 'undefined' ||
-    readAnalyticsConsent() !== 'granted'
-  )
+  if (typeof window === 'undefined' || readAnalyticsConsent() !== 'granted')
     return false
   if (!initialized) initializeGoogleAnalytics()
-  if (!configured && !loadGoogleTag()) return false
+  if (!configured && !loadAnalyticsContainer()) return false
 
-  gtag('event', eventName, parameters)
+  gtag('event', eventName, {
+    ...parameters,
+    page_location: sanitizePageLocation(),
+  })
   return true
 }
