@@ -1,6 +1,4 @@
-import {
-  readAnalyticsConsent,
-} from './analyticsConsent'
+import { readAnalyticsConsent } from './analyticsConsent'
 
 export const GA_MEASUREMENT_ID = 'G-Q1ZTCQG9RN'
 
@@ -122,7 +120,10 @@ export function trackGooglePageView({ path, title } = {}) {
 }
 
 export function trackGoogleEvent(eventName, parameters = {}) {
-  if (typeof window === 'undefined' || readAnalyticsConsent() !== 'granted')
+  if (
+    typeof window === 'undefined' ||
+    readAnalyticsConsent() !== 'granted'
+  )
     return false
   if (!initialized) initializeGoogleAnalytics()
   if (!configured && !loadGoogleTag()) return false
