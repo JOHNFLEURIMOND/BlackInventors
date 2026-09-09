@@ -1,6 +1,10 @@
+import { readAnalyticsConsent } from './analyticsConsent'
+
 const EVENT_NAMESPACE = 'black-inventors'
 
 function emit(eventName, payload = {}) {
+  if (readAnalyticsConsent() !== 'granted') return null
+
   const event = {
     namespace: EVENT_NAMESPACE,
     eventName,
@@ -28,8 +32,8 @@ export function trackInventorClick({ inventorId, category, position }) {
   return emit('inventor_click', { inventorId, category, position })
 }
 
-export function trackSearch({ query }) {
-  return emit('search', { query })
+export function trackSearch(_options = {}) {
+  return emit('search')
 }
 
 export function trackFilter({ type, value }) {

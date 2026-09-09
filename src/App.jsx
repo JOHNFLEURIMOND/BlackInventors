@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import Routes from './Routes'
 import Header from './component/Header'
 import Footer from './component/Footer'
+import CookieConsent from './component/CookieConsent'
 import { ThemeProvider } from 'styled-components'
 import { colors, media } from './theme'
 import GlobalStyle from './GlobalStyle.jsx'
@@ -38,6 +39,7 @@ const App = () => (
       <Routes />
     </main>
     <Footer />
+    <CookieConsent />
   </ThemeProvider>
 )
 
