@@ -67,6 +67,10 @@ describe('Google Tag Manager client', () => {
     expect(JSON.stringify(window.dataLayer)).not.toContain(
       'fictional-private-search'
     )
-    expect(JSON.stringify(window.dataLayer)).not.toContain('G-Q1ZTCQG9RN')
+    expect(
+      window.dataLayer.some(
+        (entry) => Array.isArray(entry) && entry[0] === 'config'
+      )
+    ).toBe(false)
   })
 })
