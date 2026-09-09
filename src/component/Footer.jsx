@@ -1,4 +1,5 @@
 import './Footer.css'
+import { Link } from 'react-router-dom'
 
 const footerDate = new Intl.DateTimeFormat('en-US', {
   weekday: 'short',
@@ -20,6 +21,11 @@ const Footer = () => {
           </span>
         </div>
         <ul className="footer-list">
+          <li className="footer-list-item">
+            <Link to="/privacypolicy" className="footer-link">
+              Privacy Policy
+            </Link>
+          </li>
           <li className="footer-list-item">
             <a
               href="https://github.com/JOHNFLEURIMOND/BlackInventors"

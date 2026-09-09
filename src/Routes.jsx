@@ -6,6 +6,7 @@ import ErrorBoundary from './component/ErrorBoundary.jsx'
 const Home = lazy(() => import('./containers/Home'))
 const NotFound = lazy(() => import('./containers/NotFound'))
 const InventorDetail = lazy(() => import('./pages/InventorDetail'))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
 
 const LoadingFallback = () => (
   <div style={{ padding: '2rem 1.6rem', maxWidth: '112rem', margin: '0 auto' }}>
@@ -20,6 +21,7 @@ export default function RoutesComponent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/inventor/:slug" element={<InventorDetail />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
