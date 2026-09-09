@@ -4,7 +4,7 @@ import analytics from './analytics'
 afterEach(() => {
   localStorage.clear()
   delete window.dataLayer
-  document.getElementById('google-analytics-gtag')?.remove()
+  document.getElementById('analytics-gtm')?.remove()
   vi.restoreAllMocks()
 })
 
@@ -42,9 +42,7 @@ describe('analytics consent gate', () => {
     )
     const consentUpdate = window.dataLayer.find(
       (entry) =>
-        Array.isArray(entry) &&
-        entry[0] === 'consent' &&
-        entry[1] === 'update'
+        Array.isArray(entry) && entry[0] === 'consent' && entry[1] === 'update'
     )
     const gaEvent = window.dataLayer.find(
       (entry) =>
@@ -59,7 +57,11 @@ describe('analytics consent gate', () => {
       ad_personalization: 'denied',
       analytics_storage: 'granted',
     })
-    expect(gaEvent).toEqual(['event', 'search', {}])
+    expect(gaEvent).toEqual([
+      'event',
+      'search',
+      { page_location: 'http://localhost:3000/' },
+    ])
     expect(JSON.stringify(window.dataLayer)).not.toContain(
       'fictional private search'
     )
