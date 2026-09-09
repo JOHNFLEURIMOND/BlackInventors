@@ -72,7 +72,7 @@ function sendPageView({ path, title }) {
   }
   if (previousPageLocation) parameters.page_referrer = previousPageLocation
 
-  gtag('event', 'page_view', parameters)
+  window.dataLayer.push({ event: 'page_view', ...parameters })
   previousPageLocation = pageLocation
   lastPageLocation = pageLocation
   return true
@@ -129,7 +129,8 @@ export function trackGoogleEvent(eventName, parameters = {}) {
   if (!initialized) initializeGoogleAnalytics()
   if (!configured && !loadAnalyticsContainer()) return false
 
-  gtag('event', eventName, {
+  window.dataLayer.push({
+    event: eventName,
     ...parameters,
     page_location: sanitizePageLocation(),
   })

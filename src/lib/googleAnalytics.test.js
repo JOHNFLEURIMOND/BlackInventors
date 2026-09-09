@@ -50,8 +50,7 @@ describe('Google Tag Manager client', () => {
         Array.isArray(entry) && entry[0] === 'consent' && entry[1] === 'update'
     )
     const pageView = window.dataLayer.find(
-      (entry) =>
-        Array.isArray(entry) && entry[0] === 'event' && entry[1] === 'page_view'
+      (entry) => entry?.event === 'page_view'
     )
 
     expect(consentUpdate[2]).toEqual({
@@ -60,7 +59,7 @@ describe('Google Tag Manager client', () => {
       ad_personalization: 'denied',
       analytics_storage: 'granted',
     })
-    expect(pageView[2]).toMatchObject({
+    expect(pageView).toMatchObject({
       page_location: 'http://localhost:3000/inventors',
       page_title: 'Black inventors',
     })
