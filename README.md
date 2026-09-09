@@ -66,7 +66,46 @@ Tracked events include:
 - Filters
 - Inventor selections
 
-The analytics architecture is designed with privacy and maintainability in mind.
+Events enter the local queue, and development logs, only after explicit analytics
+opt-in. No collector or GA destination is configured. `trackSearch({ query })`
+remains callable, but search events have an empty payload: raw search text is
+never queued or logged. Events blocked before consent are not replayed.
+
+### Cookie Consent
+
+`src/lib/analyticsConsent.js` exports:
+
+- `readAnalyticsConsent()`: returns `granted`, `denied`, or `unknown`.
+- `setAnalyticsConsent(choice)`: accepts only `granted` or `denied`, returns
+      `{ analytics, persisted }`, and dispatches `analytics-consent-change` with
+      detail `{ analytics: choice }` after an explicit choice.
+- `initializeAnalyticsConsent()`: initializes denial cleanup and cross-tab/page
+      restore handling once, before React renders.
+
+The nonmodal banner offers equally styled Accept analytics and Reject analytics
+buttons. Cookie settings remains available; reopening focuses the heading and
+closing returns focus to that control. Closing alone does not grant consent.
+
+`analytics-consent-v1` stores `granted` or `denied` in local storage. A denial-only
+session-storage override protects against stale grants if local storage fails.
+Unreadable or malformed storage does not authorize analytics. Explicit acceptance
+may apply in memory only. If both stores fail on denial, a denial-only
+`analytics-consent-v1=denied` URL parameter protects reloads. The banner reports
+failed permanent persistence. With storage disabled, choices cannot be guaranteed
+across new tabs or independently opened URLs.
+
+Denial empties the custom queue and expires JavaScript-accessible `_ga` and
+`_ga_*` cookies at the current host, parent domains, and root/current ancestor
+paths. Other cookies remain untouched. HttpOnly cookies, unrelated domains, and
+cookies hidden at other paths cannot be removed by this client helper.
+
+Advertising is not enabled. Do not add a collector, measurement ID, or `gtag`
+initialization until the authorized GA property exists and its configuration is
+reviewed. Any future collector must honor this gate and keep `ad_storage`,
+`ad_user_data`, and `ad_personalization` denied, with `analytics_storage` denied
+by default.
+
+Focused checks: `npm test -- src/lib/analytics.test.js src/lib/analyticsConsent.test.js src/component/CookieConsent.test.jsx`.
 
 ---
 
