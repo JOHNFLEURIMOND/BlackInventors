@@ -1,6 +1,30 @@
 import { readAnalyticsConsent } from './analyticsConsent'
+import { trackGoogleEvent, trackGooglePageView } from './googleAnalytics'
 
 const EVENT_NAMESPACE = 'black-inventors'
+
+function toGoogleParameters(eventName, payload) {
+  switch (eventName) {
+    case 'inventor_click':
+      return {
+        inventor_id: payload.inventorId,
+        category: payload.category,
+        position: payload.position,
+      }
+    case 'filter':
+      return {
+        filter_type: payload.type,
+        filter_value: payload.value,
+      }
+    case 'timeline_interaction':
+      return {
+        inventor_id: payload.inventorId,
+        action: payload.action,
+      }
+    default:
+      return {}
+  }
+}
 
 function emit(eventName, payload = {}) {
   if (readAnalyticsConsent() !== 'granted') return null
@@ -15,6 +39,7 @@ function emit(eventName, payload = {}) {
   if (typeof window !== 'undefined') {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(event)
+    trackGoogleEvent(eventName, toGoogleParameters(eventName, payload))
   }
 
   if (import.meta.env.DEV) {
@@ -25,7 +50,27 @@ function emit(eventName, payload = {}) {
 }
 
 export function trackPageView({ path, title }) {
-  return emit('page_view', { path, title })
+  trackGooglePageView({ path, title })
+
+  if (readAnalyticsConsent() !== 'granted') return null
+
+  const event = {
+    namespace: EVENT_NAMESPACE,
+    eventName: 'page_view',
+    timestamp: new Date().toISOString(),
+    payload: { path, title },
+  }
+
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push(event)
+  }
+
+  if (import.meta.env.DEV) {
+    console.info('analytics:event', event)
+  }
+
+  return event
 }
 
 export function trackInventorClick({ inventorId, category, position }) {
