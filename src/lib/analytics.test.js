@@ -37,31 +37,31 @@ describe('analytics consent gate', () => {
     vi.spyOn(console, 'info').mockImplementation(() => {})
 
     const event = analytics.trackSearch({ query: 'fictional private search' })
-    const internalEvent = window.dataLayer.find(
-      (entry) => entry?.eventName === 'search'
-    )
     const consentUpdate = window.dataLayer.find(
       (entry) =>
         Array.isArray(entry) && entry[0] === 'consent' && entry[1] === 'update'
     )
     const gaEvent = window.dataLayer.find(
-      (entry) =>
-        Array.isArray(entry) && entry[0] === 'event' && entry[1] === 'search'
+      (entry) => entry?.event === 'inventor_search'
     )
 
-    expect(event.payload).toEqual({})
-    expect(internalEvent).toEqual(event)
+    expect(event).toEqual({
+      event: 'inventor_search',
+      query_length_bucket: '11_plus',
+      result_count: 0,
+    })
     expect(consentUpdate[2]).toEqual({
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied',
       analytics_storage: 'granted',
     })
-    expect(gaEvent).toEqual([
-      'event',
-      'search',
-      { page_location: 'http://localhost:3000/' },
-    ])
+    expect(gaEvent).toEqual({
+      event: 'inventor_search',
+      query_length_bucket: '11_plus',
+      result_count: 0,
+      page_location: 'http://localhost:3000/',
+    })
     expect(JSON.stringify(window.dataLayer)).not.toContain(
       'fictional private search'
     )
