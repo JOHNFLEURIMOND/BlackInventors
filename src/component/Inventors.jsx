@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './Inventors.css'
 import InventorCard from './InventorCard'
 import useInventors from '../hooks/useInventors'
@@ -20,6 +20,7 @@ const Inventors = () => {
   const [category, setCategory] = useState('all')
   const [era, setEra] = useState('all')
   const [sort, setSort] = useState('name-asc')
+  const initialSearch = useRef(true)
 
   const eraCounts = useMemo(() => {
     const counts = {
@@ -88,6 +89,17 @@ const Inventors = () => {
     era !== 'all' ? { key: 'era', label: `Era: ${era}` } : null,
     sort !== 'name-asc' ? { key: 'sort', label: `Sort: ${sort}` } : null,
   ].filter(Boolean)
+
+  useEffect(() => {
+    if (initialSearch.current) {
+      initialSearch.current = false
+      return undefined
+    }
+    const timer = window.setTimeout(() => {
+      trackSearch({ query, resultCount: featured.length })
+    }, 500)
+    return () => window.clearTimeout(timer)
+  }, [query, featured.length])
 
   function resetFilters() {
     setQuery('')
@@ -175,7 +187,6 @@ const Inventors = () => {
               onChange={(event) => {
                 const value = event.target.value
                 setQuery(value)
-                trackSearch({ query: value })
               }}
               placeholder="Search by name, field, or keyword"
             />
