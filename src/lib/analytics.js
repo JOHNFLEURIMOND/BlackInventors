@@ -1,20 +1,24 @@
 import { readAnalyticsConsent } from './analyticsConsent'
 import { trackGoogleEvent, trackGooglePageView } from './googleAnalytics'
 
-const EVENT_NAMESPACE = 'black-inventors'
-
 function toGoogleParameters(eventName, payload) {
   switch (eventName) {
-    case 'inventor_click':
+    case 'inventor_select':
       return {
         inventor_id: payload.inventorId,
-        category: payload.category,
-        position: payload.position,
+        inventor_category: payload.category,
+        list_position: payload.position,
+        selection_source: payload.selectionSource || 'list',
       }
-    case 'filter':
+    case 'inventor_filter_apply':
       return {
-        filter_type: payload.type,
+        filter_name: payload.type,
         filter_value: payload.value,
+      }
+    case 'inventor_search':
+      return {
+        query_length_bucket: payload.queryLengthBucket,
+        result_count: payload.resultCount,
       }
     case 'timeline_interaction':
       return {
@@ -29,24 +33,17 @@ function toGoogleParameters(eventName, payload) {
 function emit(eventName, payload = {}) {
   if (readAnalyticsConsent() !== 'granted') return null
 
-  const event = {
-    namespace: EVENT_NAMESPACE,
-    eventName,
-    timestamp: new Date().toISOString(),
-    payload,
-  }
+  const parameters = toGoogleParameters(eventName, payload)
 
   if (typeof window !== 'undefined') {
-    window.dataLayer = window.dataLayer || []
-    window.dataLayer.push(event)
-    trackGoogleEvent(eventName, toGoogleParameters(eventName, payload))
+    trackGoogleEvent(eventName, parameters)
   }
 
   if (import.meta.env.DEV) {
-    console.info('analytics:event', event)
+    console.info('analytics:event', { event: eventName, ...parameters })
   }
 
-  return event
+  return { event: eventName, ...parameters }
 }
 
 export function trackPageView({ path, title }) {
@@ -54,35 +51,38 @@ export function trackPageView({ path, title }) {
 
   if (readAnalyticsConsent() !== 'granted') return null
 
-  const event = {
-    namespace: EVENT_NAMESPACE,
-    eventName: 'page_view',
-    timestamp: new Date().toISOString(),
-    payload: { path, title },
-  }
-
-  if (typeof window !== 'undefined') {
-    window.dataLayer = window.dataLayer || []
-    window.dataLayer.push(event)
-  }
-
-  if (import.meta.env.DEV) {
-    console.info('analytics:event', event)
-  }
-
-  return event
+  return { event: 'page_view', path, title }
 }
 
-export function trackInventorClick({ inventorId, category, position }) {
-  return emit('inventor_click', { inventorId, category, position })
+export function trackInventorClick({
+  inventorId,
+  category,
+  position,
+  selectionSource,
+}) {
+  return emit('inventor_select', {
+    inventorId,
+    category,
+    position,
+    selectionSource,
+  })
 }
 
-export function trackSearch(_options = {}) {
-  return emit('search')
+export function trackSearch({ query = '', resultCount = 0 } = {}) {
+  const length = query.trim().length
+  const queryLengthBucket =
+    length === 0
+      ? 'empty'
+      : length <= 3
+        ? '1_3'
+        : length <= 10
+          ? '4_10'
+          : '11_plus'
+  return emit('inventor_search', { queryLengthBucket, resultCount })
 }
 
 export function trackFilter({ type, value }) {
-  return emit('filter', { type, value })
+  return emit('inventor_filter_apply', { type, value })
 }
 
 export function trackTimelineInteraction({ inventorId, action }) {
