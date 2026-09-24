@@ -2,7 +2,7 @@
 
 > A modern interactive archive celebrating the innovators, engineers, scientists, and creators whose inventions shaped history.
 
-🔗 **Live Demo:** https://johnfleurimond.com/
+🔗 **Live Demo:** https://blackinventors.netlify.app/
 
 ## Overview
 
