@@ -20,9 +20,9 @@ const AnalyticsListener = () => {
   useEffect(() => {
     trackPageView({
       path: location.pathname,
-      title: document.title,
+      navigationKey: location.key,
     })
-  }, [location.pathname])
+  }, [location.pathname, location.key])
 
   return null
 }

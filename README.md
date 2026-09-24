@@ -66,10 +66,11 @@ Tracked events include:
 - Filters
 - Inventor selections
 
-Events enter the local queue, and development logs, only after explicit analytics
-opt-in. No collector or GA destination is configured. `trackSearch({ query })`
-remains callable, but search events have an empty payload: raw search text is
-never queued or logged. Events blocked before consent are not replayed.
+Events use GTM container `GTM-5RGK52GJ` after explicit analytics opt-in,
+only in a production build on the configured production origin. Application
+payloads exclude raw search text, query strings and unknown route paths.
+See [ANALYTICS.md](ANALYTICS.md) for the event contract, environment guard,
+consent behavior and outstanding production validation. GA4 delivery is unverified.
 
 ### Cookie Consent
 
@@ -77,10 +78,10 @@ never queued or logged. Events blocked before consent are not replayed.
 
 - `readAnalyticsConsent()`: returns `granted`, `denied`, or `unknown`.
 - `setAnalyticsConsent(choice)`: accepts only `granted` or `denied`, returns
-      `{ analytics, persisted }`, and dispatches `analytics-consent-change` with
-      detail `{ analytics: choice }` after an explicit choice.
+  `{ analytics, persisted }`, and dispatches `analytics-consent-change` with
+  detail `{ analytics: choice }` after an explicit choice.
 - `initializeAnalyticsConsent()`: initializes denial cleanup and cross-tab/page
-      restore handling once, before React renders.
+  restore handling once, before React renders.
 
 The nonmodal banner offers equally styled Accept analytics and Reject analytics
 buttons. Cookie settings remains available; reopening focuses the heading and
@@ -99,11 +100,9 @@ Denial empties the custom queue and expires JavaScript-accessible `_ga` and
 paths. Other cookies remain untouched. HttpOnly cookies, unrelated domains, and
 cookies hidden at other paths cannot be removed by this client helper.
 
-Advertising is not enabled. Do not add a collector, measurement ID, or `gtag`
-initialization until the authorized GA property exists and its configuration is
-reviewed. Any future collector must honor this gate and keep `ad_storage`,
-`ad_user_data`, and `ad_personalization` denied, with `analytics_storage` denied
-by default.
+Advertising consent remains denied after analytics opt-in. Revocation updates
+Google consent and reloads to unload the container. Application collection stops
+immediately. GTM configuration and destination validation are separate release gates.
 
 Focused checks: `npm test -- src/lib/analytics.test.js src/lib/analyticsConsent.test.js src/component/CookieConsent.test.jsx`.
 
@@ -126,7 +125,7 @@ Designed to help users quickly find stories that interest them.
 
 ## Frontend
 
-- React 18
+- React 19
 - React Router
 - styled-components
 - Vite 8

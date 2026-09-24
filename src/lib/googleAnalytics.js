@@ -1,4 +1,5 @@
 import { readAnalyticsConsent } from './analyticsConsent'
+import { eventParameters, pageContext } from './analyticsContract'
 
 export const GTM_CONTAINER_ID = 'GTM-5RGK52GJ'
 
@@ -19,25 +20,33 @@ const ANALYTICS_ONLY_CONSENT = {
 let initialized = false
 let configured = false
 let unloading = false
-let lastPageLocation = null
+let lastNavigation = null
+let lastDetailNavigation = null
 let previousPageLocation = null
+let currentPageReferrer = ''
 let pendingPageView = null
 
-function gtag(...args) {
+function gtag() {
   window.dataLayer = window.dataLayer || []
-  window.dataLayer.push(args)
+  window.dataLayer.push(arguments)
 }
 
-function sanitizePageLocation(path) {
-  const pathname =
-    typeof path === 'string' && path.startsWith('/')
-      ? path.split(/[?#]/, 1)[0]
-      : window.location.pathname
-  return new URL(pathname, window.location.origin).href
+function isProductionOrigin() {
+  return (
+    import.meta.env.PROD &&
+    window.location.origin ===
+      (import.meta.env.VITE_ANALYTICS_ORIGIN ||
+        'https://blackinventors.netlify.app')
+  )
 }
 
 function loadAnalyticsContainer() {
-  if (configured || unloading || readAnalyticsConsent() !== 'granted')
+  if (
+    !isProductionOrigin() ||
+    configured ||
+    unloading ||
+    readAnalyticsConsent() !== 'granted'
+  )
     return false
 
   gtag('consent', 'default', DENIED_CONSENT)
@@ -59,22 +68,24 @@ function loadAnalyticsContainer() {
   return true
 }
 
-function sendPageView({ path, title }) {
-  if (readAnalyticsConsent() !== 'granted') return false
+function sendPageView({ path, navigationKey }) {
+  if (
+    unloading ||
+    !isProductionOrigin() ||
+    readAnalyticsConsent() !== 'granted'
+  )
+    return false
   if (!configured && !loadAnalyticsContainer()) return false
 
-  const pageLocation = sanitizePageLocation(path)
-  if (pageLocation === lastPageLocation) return false
-
-  const parameters = {
-    page_location: pageLocation,
-    page_title: title || document.title,
-  }
-  if (previousPageLocation) parameters.page_referrer = previousPageLocation
-
+  const parameters = pageContext(path)
+  const navigation = `${navigationKey || 'initial'}:${parameters.page_path}`
+  if (navigation === lastNavigation) return false
+  currentPageReferrer = previousPageLocation || ''
+  parameters.page_referrer = currentPageReferrer
   window.dataLayer.push({ event: 'page_view', ...parameters })
-  previousPageLocation = pageLocation
-  lastPageLocation = pageLocation
+  previousPageLocation = parameters.page_location
+  lastNavigation = navigation
+  if (parameters.page_type !== 'inventor_detail') lastDetailNavigation = null
   return true
 }
 
@@ -86,6 +97,7 @@ function flushPendingPageView() {
 }
 
 function applyConsent() {
+  if (unloading) return
   const consent = readAnalyticsConsent()
 
   if (consent === 'granted') {
@@ -104,7 +116,8 @@ function applyConsent() {
 }
 
 export function initializeGoogleAnalytics() {
-  if (typeof window === 'undefined' || initialized) return
+  if (typeof window === 'undefined' || initialized || !isProductionOrigin())
+    return
   initialized = true
 
   window.addEventListener(CONSENT_EVENT, applyConsent)
@@ -112,27 +125,42 @@ export function initializeGoogleAnalytics() {
     if (event.key === CONSENT_KEY || event.key === null) applyConsent()
   })
 
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) applyConsent()
+  })
   applyConsent()
 }
 
-export function trackGooglePageView({ path, title } = {}) {
+export function trackGooglePageView({ path, navigationKey } = {}) {
   if (typeof window === 'undefined') return false
   if (!initialized) initializeGoogleAnalytics()
 
-  pendingPageView = { path, title }
+  pendingPageView = { path, navigationKey }
   return flushPendingPageView()
 }
 
-export function trackGoogleEvent(eventName, parameters = {}) {
-  if (typeof window === 'undefined' || readAnalyticsConsent() !== 'granted')
+export function trackGoogleEvent(eventName, parameters = {}, navigationKey) {
+  if (
+    typeof window === 'undefined' ||
+    unloading ||
+    !isProductionOrigin() ||
+    readAnalyticsConsent() !== 'granted'
+  )
     return false
+  const validated = eventParameters(eventName, parameters)
+  if (!validated) return false
   if (!initialized) initializeGoogleAnalytics()
   if (!configured && !loadAnalyticsContainer()) return false
-
+  if (eventName === 'inventor_detail_view') {
+    const navigation = `${navigationKey}:${validated.inventor_id}`
+    if (navigation === lastDetailNavigation) return false
+    lastDetailNavigation = navigation
+  }
   window.dataLayer.push({
     event: eventName,
-    ...parameters,
-    page_location: sanitizePageLocation(),
+    ...validated,
+    ...pageContext(),
+    page_referrer: currentPageReferrer,
   })
   return true
 }

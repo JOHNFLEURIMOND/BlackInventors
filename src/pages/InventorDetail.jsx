@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import useInventors from '../hooks/useInventors'
 import './InventorDetail.css'
+import { trackInventorClick, trackInventorDetailView } from '../lib/analytics'
 
 export default function InventorDetail() {
   const { slug } = useParams()
+  const location = useLocation()
   const { loading, error, getBySlug, getById } = useInventors()
   const inventor = getBySlug(slug)
 
@@ -18,6 +20,18 @@ export default function InventorDetail() {
 
     document.title = `${inventor.displayName} | Black Inventors Archive`
   }, [inventor, loading])
+
+  useEffect(() => {
+    if (loading || error || !inventor) return undefined
+    const track = () =>
+      trackInventorDetailView({
+        inventorId: inventor.id,
+        navigationKey: location.key,
+      })
+    track()
+    window.addEventListener('analytics-consent-change', track)
+    return () => window.removeEventListener('analytics-consent-change', track)
+  }, [inventor, loading, error, location.key])
 
   if (loading)
     return <div className="inventor-detail-shell">Loading inventor...</div>
@@ -125,7 +139,15 @@ export default function InventorDetail() {
             <ul className="detail-list">
               {related.map((person) => (
                 <li key={person.id}>
-                  <Link to={`/inventor/${person.slug}`}>
+                  <Link
+                    to={`/inventor/${person.slug}`}
+                    onClick={() =>
+                      trackInventorClick({
+                        inventorId: person.id,
+                        selectionSource: 'related',
+                      })
+                    }
+                  >
                     {person.displayName}
                   </Link>
                 </li>
