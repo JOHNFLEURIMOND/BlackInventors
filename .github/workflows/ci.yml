@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
@@ -31,11 +31,14 @@ jobs:
       - name: Run lint
         run: npm run lint
 
-      - name: Run build
-        run: npm run build
-
       - name: Run tests
         run: npm run test
+
+      - name: Run production build
+        run: npm run build
+
+      - name: Verify production artifacts
+        run: npm run verify:build
 
       - name: Run security audit
         # Known finding: GHSA-qwww-vcr4-c8h2 (react-router RSC-mode CSRF bypass).
