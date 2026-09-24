@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import './Home.css'
+import { trackInventorClick } from '../lib/analytics'
 
 const Inventors = lazy(() => import('../component/Inventors'))
 
@@ -44,7 +45,16 @@ const Home = () => {
                 From carbon filament improvements to blueprint systems, Latimer
                 helped make electric light practical for everyday life.
               </p>
-              <Link className="spotlight-link" to="/inventor/lewis-latimer">
+              <Link
+                className="spotlight-link"
+                to="/inventor/lewis-latimer"
+                onClick={() =>
+                  trackInventorClick({
+                    inventorId: 'lewis-latimer',
+                    selectionSource: 'featured',
+                  })
+                }
+              >
                 View story
               </Link>
             </aside>

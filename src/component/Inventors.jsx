@@ -4,6 +4,8 @@ import InventorCard from './InventorCard'
 import useInventors from '../hooks/useInventors'
 import { trackFilter, trackInventorClick, trackSearch } from '../lib/analytics'
 
+import { readAnalyticsConsent } from '../lib/analyticsConsent'
+
 const ERAS = ['all', '1700s', '1800s', '1900s', '2000+']
 
 function getEra(year) {
@@ -20,7 +22,8 @@ const Inventors = () => {
   const [category, setCategory] = useState('all')
   const [era, setEra] = useState('all')
   const [sort, setSort] = useState('name-asc')
-  const initialSearch = useRef(true)
+  const lastSearch = useRef('')
+  const previousFilters = useRef({ era: 'all', category: 'all' })
 
   const eraCounts = useMemo(() => {
     const counts = {
@@ -91,15 +94,41 @@ const Inventors = () => {
   ].filter(Boolean)
 
   useEffect(() => {
-    if (initialSearch.current) {
-      initialSearch.current = false
+    const normalizedQuery = query.trim().toLowerCase()
+    if (normalizedQuery === lastSearch.current) return undefined
+    if (readAnalyticsConsent() !== 'granted') {
+      lastSearch.current = normalizedQuery
       return undefined
     }
     const timer = window.setTimeout(() => {
-      trackSearch({ query, resultCount: featured.length })
+      lastSearch.current = normalizedQuery
+      trackSearch({ query: normalizedQuery, resultCount: featured.length })
     }, 500)
-    return () => window.clearTimeout(timer)
+    const cancel = () => {
+      window.clearTimeout(timer)
+      lastSearch.current = normalizedQuery
+    }
+    window.addEventListener('analytics-consent-change', cancel)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('analytics-consent-change', cancel)
+    }
   }, [query, featured.length])
+
+  useEffect(() => {
+    for (const [type, value] of Object.entries({ era, category })) {
+      const previousValue = previousFilters.current[type]
+      if (previousValue !== value) {
+        trackFilter({
+          type,
+          value,
+          previousValue,
+          resultCount: featured.length,
+        })
+      }
+    }
+    previousFilters.current = { era, category }
+  }, [era, category, featured.length])
 
   function resetFilters() {
     setQuery('')
@@ -165,7 +194,6 @@ const Inventors = () => {
               className={`era-pill ${item === era ? 'era-pill--active' : ''}`}
               onClick={() => {
                 setEra(item)
-                trackFilter({ type: 'era', value: item })
               }}
             >
               <span>{item === 'all' ? 'All Eras' : item}</span>
@@ -200,7 +228,6 @@ const Inventors = () => {
               onChange={(event) => {
                 const value = event.target.value
                 setCategory(value)
-                trackFilter({ type: 'category', value })
               }}
             >
               <option value="all">All categories</option>
@@ -220,7 +247,6 @@ const Inventors = () => {
               onChange={(event) => {
                 const value = event.target.value
                 setEra(value)
-                trackFilter({ type: 'era', value })
               }}
             >
               <option value="all">All eras</option>

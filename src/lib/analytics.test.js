@@ -1,69 +1,60 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import analytics from './analytics'
+import { describe, expect, it } from 'vitest'
+import { eventParameters, pageContext } from './analyticsContract'
 
-afterEach(() => {
-  localStorage.clear()
-  delete window.dataLayer
-  document.getElementById('analytics-gtm')?.remove()
-  vi.restoreAllMocks()
-})
-
-describe('analytics consent gate', () => {
-  it.each([null, 'denied', 'invalid'])(
-    'does not queue or log for %s',
-    (choice) => {
-      if (choice) localStorage.setItem('analytics-consent-v1', choice)
-      const log = vi.spyOn(console, 'info').mockImplementation(() => {})
-      for (const track of Object.values(analytics)) {
-        expect(track({})).toBeNull()
-      }
-      expect(window.dataLayer).toBeUndefined()
-      expect(log).not.toHaveBeenCalled()
+describe('analytics contract', () => {
+  it('redacts arbitrary paths, URLs and unknown inventor slugs', () => {
+    for (const path of [
+      '/private@example.com',
+      '/inventor/private@example.com',
+      '//other.example/private',
+      '/inventor/constructor',
+    ]) {
+      expect(pageContext(path).page_path).toBe('/not-found')
+      expect(JSON.stringify(pageContext(path))).not.toContain('private')
     }
-  )
-
-  it('fails closed when storage cannot be read', () => {
-    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
-      throw new Error('Storage unavailable')
-    })
     expect(
-      analytics.trackSearch({ query: 'fictional private search' })
-    ).toBeNull()
-    expect(window.dataLayer).toBeUndefined()
+      pageContext('/inventor/lewis-latimer?secret=1#private').page_path
+    ).toBe('/inventor/lewis-latimer')
   })
-
-  it('sends the correct GA4 event after opt-in without raw search text', () => {
-    localStorage.setItem('analytics-consent-v1', 'granted')
-    vi.spyOn(console, 'info').mockImplementation(() => {})
-
-    const event = analytics.trackSearch({ query: 'fictional private search' })
-    const consentUpdate = window.dataLayer.find(
-      (entry) =>
-        Array.isArray(entry) && entry[0] === 'consent' && entry[1] === 'update'
-    )
-    const gaEvent = window.dataLayer.find(
-      (entry) => entry?.event === 'inventor_search'
-    )
-
-    expect(event).toEqual({
-      event: 'inventor_search',
-      query_length_bucket: '11_plus',
-      result_count: 0,
-    })
-    expect(consentUpdate[2]).toEqual({
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'granted',
-    })
-    expect(gaEvent).toEqual({
-      event: 'inventor_search',
-      query_length_bucket: '11_plus',
-      result_count: 0,
-      page_location: 'http://localhost:3000/',
-    })
-    expect(JSON.stringify(window.dataLayer)).not.toContain(
-      'fictional private search'
-    )
+  it('drops unapproved fields and derives inventor metadata from the catalog', () => {
+    expect(
+      eventParameters('inventor_select', {
+        inventor_id: 'lewis-latimer',
+        selection_source: 'featured',
+        email: 'private@example.com',
+        inventor_category: 'private',
+      })
+    ).toEqual({ inventor_id: 'lewis-latimer', selection_source: 'featured' })
+    expect(
+      eventParameters('inventor_search', {
+        query_length_bucket: '4_10',
+        result_count: 1,
+        query: 'private',
+      })
+    ).toEqual({ query_length_bucket: '4_10', result_count: 1 })
+  })
+  it.each([
+    ['unknown_event', {}],
+    [
+      'inventor_select',
+      { inventor_id: 'constructor', selection_source: 'list' },
+    ],
+    [
+      'inventor_select',
+      { inventor_id: 'lewis-latimer', selection_source: 'private' },
+    ],
+    [
+      'inventor_filter_apply',
+      { filter_name: 'era', filter_value: 'private', result_count: 0 },
+    ],
+    ['inventor_search', { query_length_bucket: 'private', result_count: 0 }],
+    ['inventor_search', { query_length_bucket: 'empty', result_count: -1 }],
+    [
+      'inventor_search',
+      { query_length_bucket: 'empty', result_count: Infinity },
+    ],
+    ['inventor_search', { query_length_bucket: 'empty', result_count: 99999 }],
+  ])('rejects invalid %s payloads', (name, payload) => {
+    expect(eventParameters(name, payload)).toBeNull()
   })
 })
