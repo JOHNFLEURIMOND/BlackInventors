@@ -6,6 +6,7 @@
     "dev": "vite",
     "serve": "vite",
     "build": "vite build",
+    "verify:build": "node scripts/verifyBuild.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -17,7 +18,7 @@
     "deps:check": "npx npm-check-updates --format group",
     "clean": "rm -rf dist",
     "prepare": "husky",
-    "check": "npm run format:check && npm run lint && npm run test && npm run build && npm run audit",
+    "check": "npm run format:check && npm run lint && npm run test && npm run build && npm run verify:build && npm run audit",
     "validate": "npm run format && npm run check"
   },
   "lint-staged": {
