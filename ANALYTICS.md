@@ -5,10 +5,12 @@
 Source audit: 2026-09-24, starting from `master` at
 `949846a331350542831c520fa0f60b472e4e8f4c`.
 
-BlackInventors is a React 19 / React Router 7 / Vite 8 SPA hosted using Netlify
-configuration. The documented production origin is
-`https://blackinventors.netlify.app`; that URL returned HTTP 404 during the audit.
-The current production URL and deployed commit remain unconfirmed.
+BlackInventors is a React 19 / React Router 7 / Vite 8 SPA hosted on Netlify.
+The Netlify commit status identifies project `black-inventor`; its live origin,
+`https://black-inventor.netlify.app`, returned HTTP 200 with the Black Inventors
+application HTML. The old documented URL (`https://blackinventors.netlify.app`)
+returned HTTP 404. This change corrects the origin and static URL references.
+The deployed commit and runtime collection remain unverified.
 
 - Application-owned GTM container: `GTM-5RGK52GJ`.
 - GTM account, numeric container ID, workspace and published version: unverified.
@@ -147,7 +149,7 @@ revocation and return visits. Count data-layer events and network requests, chec
 the intended Measurement ID and redacted payload, then confirm DebugView, Realtime
 and processed reporting. Repeat representative mobile and desktop checks.
 
-Outstanding evidence: live URL, deployed commit, GTM inventory/version, GA4 property
+Outstanding evidence: deployed commit, GTM inventory/version, GA4 property
 and destination, vendor network traffic, DebugView, Realtime and standard reports.
 A queued event or fired tag is not proof of collection.
 

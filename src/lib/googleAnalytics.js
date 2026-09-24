@@ -36,7 +36,7 @@ function isProductionOrigin() {
     import.meta.env.PROD &&
     window.location.origin ===
       (import.meta.env.VITE_ANALYTICS_ORIGIN ||
-        'https://blackinventors.netlify.app')
+        'https://black-inventor.netlify.app')
   )
 }
 

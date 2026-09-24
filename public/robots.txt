@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://blackinventors.netlify.app/sitemap.xml
+Sitemap: https://black-inventor.netlify.app/sitemap.xml
