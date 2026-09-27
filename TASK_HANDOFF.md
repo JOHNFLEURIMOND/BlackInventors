@@ -2,51 +2,56 @@
 
 ## Outcome
 
-Completed and documented the source-level analytics audit in `ANALYTICS.md`.
-The audit confirms that consented events stop in a local queue and no analytics
-destination sends them. No tracking code, dependencies, provider configuration,
-deployment, or external analytics system changed.
+Validated the merged analytics implementation against the production site and
+documented the first confirmed downstream failure in `ANALYTICS.md`. Application
+consent enforcement and event creation behave as designed, but the published GTM
+trigger omits `inventor_detail_view` and the GA4 event tag omits required mappings.
+No application code, deployment, GTM container or GA4 property changed.
 
 ## Changes
 
-- Added source-linked evidence for framework, routes, event and consent
-  utilities, search, filters, selections, details, data access, and tests.
-- Classified the collection failure, integration mismatch, event-volume risk,
-  taxonomy inconsistencies, and interaction coverage gaps.
-- Retained the proposed vendor-neutral event contract and explicit migration
-  from existing event names without duplicate legacy events.
+- Recorded Netlify production deploy `6ab5206c72913a0008d79e64` serving merge
+  commit `017fd031b9d5e9449d91d48103acdce94990c833`.
+- Recorded production consent, search, filter, list/featured selection, detail,
+  back-navigation, return-visit, deduplication and representative viewport checks.
+- Recorded published container `GTM-5RGK52GJ`, `send_page_view=false`, and the
+  observed two-tag inventory. The GA4 destination identifier is intentionally
+  omitted from repository documentation.
+- Documented the stale trigger and missing parameter mappings without changing
+  either external system.
 
 ## Verification
 
-- Ran `npx prettier --check ANALYTICS.md`: passed.
-- Checked editor diagnostics for `ANALYTICS.md`: no errors.
-- Verified every local Markdown evidence link resolves to an existing file and
-  referenced line.
-- Application tests and browser checks were not run because this task changed
-  documentation only.
-- No Measurement ID or analytics destination exists; browser requests, DebugView,
-  and GA4 reporting remain unvalidated.
+- Unknown and denied consent produced no data layer, GTM loader or readable cookies.
+- Grant ordering, repeated grant, revocation reload and granted/denied return visits
+  matched the documented consent contract.
+- Production `dataLayer` events matched the allowlisted payload contract and counts
+  for the tested search, era filter, list selection, featured selection, detail and
+  back-navigation paths.
+- A 500-by-812 browser viewport had no horizontal overflow; keyboard interaction
+  was not validated.
+- The published GTM resource was fetched outside the browser surrogate and inspected.
+- Outbound GA4 requests, DebugView, Realtime and processed reports remain unverified.
+- `npx prettier --check ANALYTICS.md TASK_HANDOFF.md`: passed.
+- `npm run lint`: passed. `npm test`: 41 tests passed across 9 files; jsdom printed
+  its expected unsupported-navigation message during the revocation test.
+- `npm run build` and `npm run verify:build`: passed. `npm run audit`: no
+  vulnerabilities found.
+- `npm run check`: stopped at the repository-wide format check because the unchanged
+  `scripts/verifyBuild.mjs` does not match Prettier formatting.
 
 ## Git and deployment state
 
-- Branch: `docs/analytics-repository-audit`, created from audited commit
-  `c79a320`, which matched `origin/chore/modernize-tooling` after fetch.
-- Existing untracked `GIT_WORKFLOW.md` remains outside this task.
-- No commit, pull request, merge, or deployment was performed.
+- Documentation branch: `docs/blackinventors-production-analytics-validation`,
+  created from `origin/master` after PR #19 merged.
+- Production was already ready before this documentation update; this work did not
+  trigger a deployment.
+- No commit or pull request has been created for this documentation update yet.
 
 ## Next actions
 
-1. Review and approve `ANALYTICS.md` before implementing an adapter.
-2. Select an approved destination and environment-isolation strategy.
-3. Replace local event calls with the approved contract without duplicates.
-
-## Workflow Documentation Update (2026-09-13)
-
-- Added the shared `GIT_WORKFLOW.md` repository workflow guide.
-- Verified the workflow file matches the versions added to the Pokémon and
-  Earthquake repositories by SHA-1 checksum.
-- Ran `npx prettier --write GIT_WORKFLOW.md`, then
-  `npx prettier --check GIT_WORKFLOW.md`: passed.
-- No application tests were run because this update changes documentation only.
-- Branch remains `docs/analytics-repository-audit`; no pull request, merge, or
-  deployment was performed.
+1. With GTM publishing authorization, replace the stale trigger with the required
+   five-event allowlist and add the missing scoped parameter mappings.
+2. Validate real outbound requests and consent behavior in a browser that does not
+   substitute GTM, then verify DebugView, Realtime and processed reporting.
+3. Record GTM version/publisher details, GA4 property/custom definitions and owners.

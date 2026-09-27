@@ -5,22 +5,29 @@
 Source audit: 2026-09-24, starting from `master` at
 `949846a331350542831c520fa0f60b472e4e8f4c`.
 
+Production deployment and browser validation: 2026-09-24. Netlify production
+deploy `6ab5206c72913a0008d79e64` serves `master` merge commit
+`017fd031b9d5e9449d91d48103acdce94990c833` at the documented live origin.
+
 BlackInventors is a React 19 / React Router 7 / Vite 8 SPA hosted on Netlify.
 The Netlify commit status identifies project `black-inventor`; its live origin,
 `https://black-inventor.netlify.app`, returned HTTP 200 with the Black Inventors
 application HTML. The old documented URL (`https://blackinventors.netlify.app`)
 returned HTTP 404. This change corrects the origin and static URL references.
-The deployed commit and runtime collection remain unverified.
 
 - Application-owned GTM container: `GTM-5RGK52GJ`.
 - GTM account, numeric container ID, workspace and published version: unverified.
-- GA4 property, Measurement ID, custom definitions and key events: unverified.
+- A published GA4 destination is configured; its identifier is intentionally not
+  recorded in repository documentation. Its property, custom definitions and key
+  events remain unverified.
 - Engineering, analytics and privacy owners: not recorded in this repository.
 - No direct `gtag.js` loader or second application-owned container was found.
-- Live GTM tags, attached destinations and piggybacked vendors were not inspected.
+- The fetched published GTM resource contains one Google tag and one GA4 event
+  tag. No Ads, Floodlight, custom HTML or other vendor tag definition was observed.
 - Source data is bundled JSON; there is no inventor API to instrument.
 
-This document describes the branch implementation, not verified production delivery.
+This document distinguishes verified application behavior from unverified GA4
+delivery. A browser-side GTM surrogate prevented direct production request proof.
 
 ## Business questions
 
@@ -47,7 +54,15 @@ Revocation updates Google consent, removes the loader and reloads to unload vend
 code. Application events stop immediately, including while reload is pending.
 Cross-tab storage changes and bfcache restores recheck consent. Existing consent
 storage fallbacks and readable GA-cookie cleanup remain in `analyticsConsent.js`.
-Browser enforcement and vendor requests during revocation still require live QA.
+
+Production browser checks verified that unknown and denied consent create no data
+layer, GTM script, cookies or observed Google analytics requests. Grant pushes the
+denied default before the analytics-only update and privacy settings, then `gtm.js`
+and one current-route page view. Repeated grant adds only a consent update; it does
+not duplicate the loader or application events. Revocation persists denial, removes
+the data layer and loader through reload, leaves no readable cookies, and keeps a
+denied return visit blocked. Post-revocation vendor requests remain unverified
+because the browser substituted a GTM test surrogate.
 
 Blocked interaction events are not replayed. The latest current route is retained
 for a page view on grant; a mounted detail screen can emit its current detail view.
@@ -79,6 +94,14 @@ Filter names are `era` or `category`; era values are `all`, `1700s`, `1800s`,
 The current catalog has no category or related-profile enrichment, so those
 controls/links have limited or no populated choices. No data enrichment is included.
 
+Production `dataLayer` checks observed one sanitized event per tested interaction:
+searching for `Latimer` produced only `query_length_bucket=4_10` and
+`result_count=1`; applying era `1800s` produced `previous_value=all` and
+`result_count=15`; list and featured selections used their respective sources;
+detail navigation and back navigation each produced one page view; and each rendered
+detail produced one deduplicated detail view. Raw search text was absent. These
+queued events do not prove GTM execution or GA4 collection.
+
 `analyticsContract.js` validates names and values and reconstructs allowlisted
 payloads. Invalid required values reject the event; invalid optional fields are
 omitted. It drops raw search text, arbitrary fields, form values, raw errors and
@@ -94,7 +117,23 @@ The application owns page views. Before release, inspect the existing live GTM
 container and compare its event names and mappings to this contract. Do not create
 another container or add direct GA4 code.
 
-Required GTM configuration, not applied or verified in this change:
+The fetched published container verifies one Google tag with
+`send_page_view=false`, one once-per-event GA4 event tag requiring
+`analytics_storage`, and one GA4 destination. Its trigger currently uses:
+
+```text
+^(?:page_view|inventor_select|inventor_search|inventor_filter_apply|timeline_interaction)$
+```
+
+This is a confirmed downstream configuration failure: required
+`inventor_detail_view` cannot reach that GA4 event tag, while retired
+`timeline_interaction` remains eligible. The GA4 event tag maps `page_location`,
+`page_title`, `page_referrer`, `inventor_id`, `inventor_category`, `list_position`,
+`filter_name`, `filter_value`, `action`, `selection_source`,
+`query_length_bucket`, and `result_count`. It does not map required `app_name`,
+`environment`, `page_type`, `page_path`, or `previous_value`.
+
+Required GTM remediation, not applied in this repository change:
 
 1. One approved GA4 destination, represented by a constant Measurement ID variable.
 2. Disable automatic Google-tag page views with `send_page_view=false`.
@@ -149,9 +188,16 @@ revocation and return visits. Count data-layer events and network requests, chec
 the intended Measurement ID and redacted payload, then confirm DebugView, Realtime
 and processed reporting. Repeat representative mobile and desktop checks.
 
-Outstanding evidence: deployed commit, GTM inventory/version, GA4 property
-and destination, vendor network traffic, DebugView, Realtime and standard reports.
-A queued event or fired tag is not proof of collection.
+Production browser validation covered unknown, denied, granted, repeated-grant and
+revoked consent; search; era filtering; list and featured pointer selections; SPA
+detail/back navigation; direct detail return visits; event deduplication; and a
+500-by-812 viewport with no horizontal overflow. Keyboard selection and populated
+related-profile/category paths were not validated. The published GTM resource was
+inspected separately because the browser replaced the GTM response with a surrogate.
+
+Outstanding evidence: GTM account/workspace/published version and publisher, GA4
+property and custom definitions, real vendor network payloads, DebugView, Realtime
+and standard reports. A queued event or fired tag is not proof of collection.
 
 Known limitation: GTM script failure has no retry or delivery acknowledgement.
 Queued events must not be reported as delivered. The application cannot constrain
